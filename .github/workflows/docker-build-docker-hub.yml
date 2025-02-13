@@ -1,0 +1,61 @@
+name: Manual Docker Build - Docker Hub
+
+on: 
+  workflow_dispatch:
+    inputs:
+      REPO_NAME:
+        description: "Repository name"
+        required: true
+        default: "comfyui"
+      BASE_IMAGE:
+        description: "Base image"
+        required: true
+        default: "nvidia/cuda:12.1.1-runtime-ubuntu20.04"
+      COMFYUI_VERSION:
+        description: "ComfyUI version"
+        required: true
+        default: "v0.3.14"
+      PYTHON_VERSION:
+        description: "Python version"
+        required: true
+        default: "3.12"
+      TORCH_VERSION:
+        description: "PyTorch version"
+        required: true
+        default: "2.5.1"
+      CUDA_VERSION:
+        description: "CUDA version"
+        required: true
+        default: "cu121"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Set image tag
+        run: |
+          echo "IMAGE_TAG=${{ github.event.inputs.REPO_NAME }}:${{ github.event.inputs.COMFYUI_VERSION }}-torch${{ github.event.inputs.TORCH_VERSION }}-${{ github.event.inputs.CUDA_VERSION }}" >> $GITHUB_ENV
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            --build-arg BASE_IMAGE=${{ github.event.inputs.BASE_IMAGE }} \
+            --build-arg COMFYUI_VERSION=${{ github.event.inputs.COMFYUI_VERSION }} \
+            --build-arg PYTHON_VERSION=${{ github.event.inputs.PYTHON_VERSION }} \
+            --build-arg TORCH_VERSION=${{ github.event.inputs.TORCH_VERSION }} \
+            --build-arg CUDA_VERSION=${{ github.event.inputs.CUDA_VERSION }} \
+            -t ${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_TAG .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/$IMAGE_TAG
