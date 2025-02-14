@@ -47,7 +47,7 @@ jobs:
 
       - name: Set image tag
         run: |
-          echo "IMAGE_TAG=${{ github.event.inputs.REPO_NAME }}:${{ github.event.inputs.COMFYUI_VERSION }}-torch${{ github.event.inputs.TORCH_VERSION }}-${{ github.event.inputs.CUDA_VERSION }}-${{ github.event.inputs.EXTRA_TAG }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${{ github.event.inputs.REPO_NAME }}:${{ github.event.inputs.COMFYUI_VERSION }}-torch${{ github.event.inputs.TORCH_VERSION }}-${{ github.event.inputs.CUDA_VERSION }}${{ github.event.inputs.EXTRA_TAG }}" >> $GITHUB_ENV
 
       - name: Build Docker image
         run: |
