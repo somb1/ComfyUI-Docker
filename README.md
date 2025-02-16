@@ -8,8 +8,11 @@
 |--------------------------|-----------------------------------------------------------------------------|--------------|
 | `COMFYUI_EXTRA_ARGS`      | Passes additional arguments to ComfyUI at startup, allowing configuration of extra options like `--highvram`, `--fp16-unet`, and `--fast`. | (Not Set)    |
 | `JUPYTERLAB_PASSWORD`    | Set a password for JupyterLab. If not set, no password is required.         | (Not Set - No Password) |
+| `TIME_ZONE`           | Sets the system timezone. If not set, defaults to `Etc/UTC`.                | `Etc/UTC`    |
 
-- **How to use**: On the Edit Pod or Edit Template screen, click 'Add Environment Variables,' enter `COMFYUI_EXTRA_ARGS` for the key, and add the desired startup arguments in the value. (You can view a list of available arguments and their descriptions by using the `--help` argument.)
+- **How to use COMFYUI_EXTRA_ARGS?**: On the Edit Pod or Edit Template screen, click 'Add Environment Variables,' enter `COMFYUI_EXTRA_ARGS` for the key, and add the desired startup arguments in the value.
+
+- **How to use TIME_ZONE?**: Available time zones  can be found at <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones> (e.g., `America/New_York`, `Asia/Seoul`).
 
 | Application | Log file                         |
 |-------------|----------------------------------|
