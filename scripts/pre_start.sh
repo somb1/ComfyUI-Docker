@@ -7,7 +7,16 @@ rsync -au --remove-source-files /venv/ /workspace/venv/ && rm -rf /venv
 # Updating '/venv' to '/workspace/venv' in all text files under '/workspace/venv/bin'
 find "/workspace/venv/bin" -type f | while read -r file; do
     if file "$file" | grep -q "text"; then
-        sed -i 's|/venv|/workspace/venv|g' "$file"
+        # VIRTUAL_ENV='/venv' → VIRTUAL_ENV='/workspace/venv'
+        sed -i "s|VIRTUAL_ENV='/venv'|VIRTUAL_ENV='/workspace/venv'|g" "$file"
+        
+        # VIRTUAL_ENV '/venv' → VIRTUAL_ENV '/workspace/venv'
+        sed -i "s|VIRTUAL_ENV '/venv'|VIRTUAL_ENV '/workspace/venv'|g" "$file"
+        
+        # #!/venv/bin/python → #!/workspace/venv/bin/python
+        sed -i "s|#!/venv/bin/python|#!/workspace/venv/bin/python|g" "$file"
+
+        # Uncomment to see which files are updated
         #echo "Updated: $file"
     fi
 done
