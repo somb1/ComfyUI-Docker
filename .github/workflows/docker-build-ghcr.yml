@@ -23,6 +23,9 @@ on:
         description: "CUDA version"
         required: true
         default: "cu121"
+      EXTRA_TAG:
+        description: "Extra tag"
+        required: false
 
 jobs:
   build:
@@ -47,7 +50,7 @@ jobs:
 
       - name: Set image tag
         run: |
-          echo "IMAGE_TAG=comfyui:${{ github.event.inputs.COMFYUI_VERSION }}-torch${{ github.event.inputs.TORCH_VERSION }}-${{ github.event.inputs.CUDA_VERSION }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=comfyui:${{ github.event.inputs.COMFYUI_VERSION }}-torch${{ github.event.inputs.TORCH_VERSION }}-${{ github.event.inputs.CUDA_VERSION }}${{ github.event.inputs.EXTRA_TAG }}" >> $GITHUB_ENV
 
       - name: Build Docker image
         run: |
