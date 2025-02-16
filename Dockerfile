@@ -29,7 +29,7 @@ WORKDIR /
 RUN apt-get update --yes && \
     apt-get upgrade --yes && \
     apt-get install --yes --no-install-recommends \
-        git wget curl bash nginx-light rsync sudo binutils ffmpeg \ 
+        git wget curl bash nginx-light rsync sudo binutils ffmpeg file \ 
         build-essential \
         libgl1 libglib2.0-0 \
         openssh-server ca-certificates && \
