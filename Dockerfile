@@ -91,9 +91,9 @@ RUN for script in ComfyUI/custom_nodes/*/install.py; do \
 # Ensure some directories are created in advance
 RUN mkdir -p /comfy-models/checkpoints /comfy-models/upscale_models /comfy-models/upscale_models /workspace/ComfyUI /workspace/logs 
 
-RUN wget -q https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /comfy-models/checkpoints && \
-    wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-models/upscale_models && \
-    wget -q https://huggingface.co/Kim2091/AnimeSharp/resolve/main/4x-AnimeSharp.pth -P /comfy-models/upscale_models
+RUN wget -q https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /comfy-models/checkpoints
+RUN wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-models/upscale_models
+RUN wget -q https://huggingface.co/Kim2091/AnimeSharp/resolve/main/4x-AnimeSharp.pth -P /comfy-models/upscale_models
 
 ENV PATH="/workspace/venv/bin:$PATH"
 
