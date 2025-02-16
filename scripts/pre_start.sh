@@ -20,6 +20,7 @@ ln -s /comfy-upscale_models/* /workspace/ComfyUI/models/upscale_models/
 #echo "**** Setting the timezone based on the TZ environment variable. If not set, it defaults to Etc/UTC. ****" && \
 export TZ=${TIME_ZONE:-"Etc/UTC"} && \
 echo "**** Timezone set to $TZ ****" && \
+echo "$TZ" | sudo tee /etc/timezone && \
 sudo dpkg-reconfigure -f noninteractive tzdata
 
 source /workspace/venv/bin/activate
