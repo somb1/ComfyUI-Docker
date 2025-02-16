@@ -11,4 +11,5 @@ rsync -au --remove-source-files /comfy-models/ /workspace/ComfyUI/models/ && rm 
 
 source /workspace/venv/bin/activate
 cd /workspace/ComfyUI
+python main.py --help &
 python main.py --listen --port 3000 $COMFYUI_EXTRA_ARGS &
