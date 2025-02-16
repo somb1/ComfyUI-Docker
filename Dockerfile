@@ -43,8 +43,8 @@ ENV PATH="/root/.local/bin/:$PATH"
 
 # Install Python and create virtual environment
 RUN uv python install ${PYTHON_VERSION} --default --preview && \
-    uv venv --seed /workspace/venv
-ENV PATH="/workspace/venv/bin:$PATH"
+    uv venv --seed /venv
+ENV PATH="/venv/bin:$PATH"
 
 # Install essential Python packages and dependencies
 RUN pip install --no-cache-dir -U \
@@ -95,7 +95,7 @@ RUN wget -q https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/r
     wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-models/upscale_models && \
     wget -q https://huggingface.co/Kim2091/AnimeSharp/resolve/main/4x-AnimeSharp.pth -P /comfy-models/upscale_models
 
-RUN mv /workspace/venv /
+ENV PATH="/workspace/venv/bin:$PATH"
 
 # NGINX Proxy Configuration
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
