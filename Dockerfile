@@ -17,6 +17,7 @@ ENV PYTHONUNBUFFERED=True
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu 
 ENV UV_COMPILE_BYTECODE=1
+ENV TZ=Etc/UTC
 
 # Shared python package cache
 ENV PIP_CACHE_DIR="/runpod-volume/.cache/pip/"
@@ -29,8 +30,7 @@ WORKDIR /
 RUN apt-get update --yes && \
     apt-get upgrade --yes && \
     apt-get install --yes --no-install-recommends \
-        git wget curl bash nginx-light rsync sudo binutils ffmpeg \ 
-        build-essential \
+        git wget curl bash nginx-light rsync sudo binutils ffmpeg nano tzdata file build-essential \
         libgl1 libglib2.0-0 \
         openssh-server ca-certificates && \
     apt-get autoremove -y && apt-get clean && \
@@ -43,8 +43,8 @@ ENV PATH="/root/.local/bin/:$PATH"
 
 # Install Python and create virtual environment
 RUN uv python install ${PYTHON_VERSION} --default --preview && \
-    uv venv --seed /workspace/venv
-ENV PATH="/workspace/venv/bin:$PATH"
+    uv venv --seed /venv
+ENV PATH="/venv/bin:$PATH"
 
 # Install essential Python packages and dependencies
 RUN pip install --no-cache-dir -U \
@@ -89,13 +89,13 @@ RUN for script in ComfyUI/custom_nodes/*/install.py; do \
     done
 
 # Ensure some directories are created in advance
-RUN mkdir -p /comfy-models/checkpoints /comfy-models/upscale_models /comfy-models/upscale_models /workspace/ComfyUI /workspace/logs 
+RUN mkdir -p /comfy-checkpoints /comfy-upscale_models /workspace/ComfyUI /workspace/logs /workspace/venv
 
-RUN wget -q https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /comfy-models/checkpoints && \
-    wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-models/upscale_models && \
-    wget -q https://huggingface.co/Kim2091/AnimeSharp/resolve/main/4x-AnimeSharp.pth -P /comfy-models/upscale_models
+RUN wget -q https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /comfy-checkpoints
+RUN wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-upscale_models
+RUN wget -q https://huggingface.co/Kim2091/AnimeSharp/resolve/main/4x-AnimeSharp.pth -P /comfy-upscale_models
 
-RUN mv /workspace/venv /
+ENV PATH="/workspace/venv/bin:$PATH"
 
 # NGINX Proxy Configuration
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
