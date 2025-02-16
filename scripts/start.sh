@@ -29,7 +29,7 @@ setup_ssh() {
         echo "$PUBLIC_KEY" >> ~/.ssh/authorized_keys
         chmod 700 -R ~/.ssh
 
-         if [ ! -f /etc/ssh/ssh_host_rsa_key ]; then
+        if [ ! -f /etc/ssh/ssh_host_rsa_key ]; then
             ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -q -N ''
             echo "RSA key fingerprint:"
             ssh-keygen -lf /etc/ssh/ssh_host_rsa_key.pub
