@@ -19,12 +19,6 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ENV UV_COMPILE_BYTECODE=1
 ENV TZ=Etc/UTC
 
-# To configure where repositories from the Hub will be cached locally
-ENV HF_HOME="/runpod-volume/.cache/huggingface/"
-
-# Faster transfer of models from the hub to the container
-ENV HF_HUB_ENABLE_HF_TRANSFER="1"
-
 # Shared python package cache
 ENV PIP_CACHE_DIR="/runpod-volume/.cache/pip/"
 ENV UV_CACHE_DIR="/runpod-volume/.cache/uv/"
@@ -55,7 +49,6 @@ ENV PATH="/workspace/venv/bin:/venv/bin:$PATH"
 RUN pip install --no-cache-dir -U \
     pip setuptools wheel \
     jupyterlab jupyterlab_widgets ipykernel ipywidgets \
-    huggingface_hub hf_transfer \
     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 
 # Install ComfyUI and ComfyUI Manager
@@ -88,19 +81,13 @@ RUN find ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-ca
     find ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 
 # Ensure some directories are created in advance
-RUN mkdir -p /comfy-checkpoints /comfy-upscale_models /workspace/{ComfyUI,logs,venv} /runpod-volume/.cache/huggingface/{hub, assets, token}
+RUN mkdir -p /comfy-checkpoints /comfy-upscale_models /workspace/{ComfyUI,logs,venv}
 
 # Download models
-RUN huggingface-cli download --quiet personal1802/NTRMIXillustrious-XLNoob-XL4.0 ntrMIXIllustriousXL_v40.safetensors --local-dir /comfy-checkpoints && \
-    huggingface-cli download --quiet Kim2091/AnimeSharpV3  2x-AnimeSharpV3.pth --local-dir /comfy-upscale_models && \
-    huggingface-cli download --quiet Kim2091/AnimeSharp 4x-AnimeSharp.pth --local-dir /comfy-upscale_models && \
-    huggingface-cli download --quiet Kim2091/2x-AnimeSharpV4 2x-AnimeSharpV4_RCAN.safetensors --local-dir /comfy-upscale_models && \
-    huggingface-cli delete-cache
-
-#RUN wget -q https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /comfy-checkpoints
-#RUN wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-upscale_models
-#RUN wget -q https://huggingface.co/Kim2091/AnimeSharp/resolve/main/4x-AnimeSharp.pth -P /comfy-upscale_models
-#RUN wget -q https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /comfy-upscale_models
+RUN wget -q https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /comfy-checkpoints
+RUN wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-upscale_models
+RUN wget -q https://huggingface.co/Kim2091/AnimeSharp/resolve/main/4x-AnimeSharp.pth -P /comfy-upscale_models
+RUN wget -q https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /comfy-upscale_models
 
 # NGINX Proxy Configuration
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
