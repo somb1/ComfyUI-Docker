@@ -6,11 +6,11 @@ on:
       BASE_IMAGE:
         description: "Base image"
         required: true
-        default: "nvidia/cuda:12.1.1-runtime-ubuntu22.04"
+        default: "nvidia/cuda:12.4.1-runtime-ubuntu22.04"
       COMFYUI_VERSION:
         description: "ComfyUI version"
         required: true
-        default: "v0.3.14"
+        default: "v0.3.15"
       PYTHON_VERSION:
         description: "Python version"
         required: true
@@ -18,11 +18,11 @@ on:
       TORCH_VERSION:
         description: "PyTorch version"
         required: true
-        default: "2.5.1"
+        default: "2.6.0"
       CUDA_VERSION:
         description: "CUDA version"
         required: true
-        default: "cu121"
+        default: "cu124"
       EXTRA_TAG:
         description: "Extra tag"
         required: false
