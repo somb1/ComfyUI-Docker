@@ -38,7 +38,6 @@
 - **Libraries**:
   - PyTorch 2.6.0
   - CUDA 12.4
-  - huggingface_hub, hf_transfer
 
 #### **Models**
 
