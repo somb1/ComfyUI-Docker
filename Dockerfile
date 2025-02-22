@@ -97,7 +97,8 @@ COPY README.md /usr/share/nginx/html/README.md
 # Copy and set execution permissions for start scripts
 COPY scripts/start.sh /
 COPY scripts/pre_start.sh /
-RUN chmod +x /start.sh /pre_start.sh
+COPY scripts/post_start.sh /
+RUN chmod +x /start.sh /pre_start.sh /post_start.sh
 
 # Welcome Message displayed upon login
 COPY logo/runpod.txt /etc/runpod.txt
