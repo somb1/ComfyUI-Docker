@@ -19,13 +19,8 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ENV UV_COMPILE_BYTECODE=1
 ENV TZ=Etc/UTC
 
-# Override the default huggingface cache directory.
+# To configure where repositories from the Hub will be cached locally
 ENV HF_HOME="/runpod-volume/.cache/huggingface/"
-ENV HF_DATASETS_CACHE="/runpod-volume/.cache/huggingface/datasets/"
-ENV DEFAULT_HF_METRICS_CACHE="/runpod-volume/.cache/huggingface/metrics/"
-ENV DEFAULT_HF_MODULES_CACHE="/runpod-volume/.cache/huggingface/modules/"
-ENV HUGGINGFACE_HUB_CACHE="/runpod-volume/.cache/huggingface/hub/"
-ENV HUGGINGFACE_ASSETS_CACHE="/runpod-volume/.cache/huggingface/assets/"
 
 # Faster transfer of models from the hub to the container
 ENV HF_HUB_ENABLE_HF_TRANSFER="1"
