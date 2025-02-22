@@ -33,7 +33,7 @@
 #### **Base System**
 
 - **OS**: Ubuntu 22.04
-- **Framework**: ComfyUI 0.3.15 + ComfyUI Manager + JupyterLab
+- **Framework**: ComfyUI v0.3.15 + ComfyUI Manager + JupyterLab
 - **Python**: 3.12
 - **Libraries**:
   - PyTorch 2.6.0
