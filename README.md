@@ -6,17 +6,18 @@
 
 | Environment Variable     | Description                                                                 | Default      |
 |--------------------------|-----------------------------------------------------------------------------|--------------|
-| `COMFYUI_EXTRA_ARGS`      | Passes additional arguments to ComfyUI at startup, allowing configuration of extra options like  `--fp16-unet`, and `--fast`. | (Not Set)    |
-| `JUPYTERLAB_PASSWORD`    | Set a password for JupyterLab. If not set, no password is required.         | (Not Set - No Password) |
-| `TIME_ZONE`           | Sets the system timezone. If not set, defaults to `Etc/UTC`.                | `Etc/UTC`    |
+| `JUPYTERLAB_PASSWORD`    | Password for JupyterLab. If unset, no password is required.                 | (Not Set)    |
+| `TIME_ZONE`              | System timezone. Defaults to `Etc/UTC` if unset.                            | `Etc/UTC`    |
+| `COMFYUI_EXTRA_ARGS`      | Passes additional startup arguments to ComfyUI, allowing extra options like `--fp16-unet` and `--fast`. | (Not Set)    |
 
-#### **How to use COMFYUI_EXTRA_ARGS**
+#### **Using COMFYUI_EXTRA_ARGS**
 
-- On the Edit Pod or Edit Template screen, click 'Add Environment Variables,' enter `COMFYUI_EXTRA_ARGS` for the key, and add the desired startup arguments in the value.
+- On the "Edit Pod" or "Edit Template" screen, click "Add Environment Variables."
+- For the key, enter `COMFYUI_EXTRA_ARGS`, and in the value field, add the desired startup arguments.
 
-#### **How to use TIME_ZONE**
+#### **Using TIME_ZONE**  
 
-- Available time zones can be found at <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones> (e.g., `America/New_York`, `Asia/Seoul`).
+- Find available time zones <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones> (e.g., `America/New_York`, `Asia/Seoul`).
 
 | Application | Log file                         |
 |-------------|----------------------------------|
@@ -32,16 +33,20 @@
 #### **Base System**
 
 - **OS**: Ubuntu 22.04
-- **Framework**: ComfyUI 0.3.14 + ComfyUI Manager + JupyterLab
+- **Framework**: ComfyUI 0.3.15 + ComfyUI Manager + JupyterLab
 - **Python**: 3.12
 - **Libraries**:
-  - PyTorch 2.5.1
-  - CUDA 12.1
+  - PyTorch 2.6.0
+  - CUDA 12.4
+  - huggingface_hub, hf_transfer
 
 #### **Models**
 
-- **Checkpoint Model**: `ntrMIXIllustriousXL_v40.safetensors` - [Link](https://civitai.com/models/926443?modelVersionId=1061268)  
+- **Checkpoint Model**:
+  - `ntrMIXIllustriousXL_v40.safetensors` - [Link](https://civitai.com/models/926443?modelVersionId=1061268)
+
 - **Upscale Models**:  
+  - `2x-AnimeSharpV4_RCAN.safetensors` - [Link](https://huggingface.co/Kim2091/2x-AnimeSharpV4)
   - `2x-AnimeSharpV3.pth`  - [Link](https://huggingface.co/Kim2091/AnimeSharpV3)  
   - `4x-AnimeSharp.pth`  - [Link](https://huggingface.co/Kim2091/AnimeSharp)  
 
