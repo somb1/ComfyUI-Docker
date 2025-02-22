@@ -83,10 +83,9 @@ RUN cd ComfyUI/custom_nodes && \
     git clone https://github.com/rgthree/rgthree-comfy.git && \
     git clone https://github.com/alexopus/ComfyUI-Image-Saver.git
 
-# Find and install requirements.txt files, and execute install.py scripts in custom nodes,  
-# limiting the search to 2 levels  
-RUN find ComfyUI/custom_nodes -maxdepth 2 -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
-    find ComfyUI/custom_nodes -maxdepth 2 -name "install.py" -exec python {} \;
+# Find and install requirements.txt files, and execute install.py scripts in custom nodes
+RUN find ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
+    find ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 
 # Ensure some directories are created in advance
 RUN mkdir -p /comfy-checkpoints /comfy-upscale_models /workspace/{ComfyUI,logs,venv}
