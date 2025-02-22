@@ -88,7 +88,7 @@ RUN find ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-ca
     find ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 
 # Ensure some directories are created in advance
-RUN mkdir -p /comfy-checkpoints /comfy-upscale_models /workspace/{ComfyUI,logs,venv}
+RUN mkdir -p /comfy-checkpoints /comfy-upscale_models /workspace/{ComfyUI,logs,venv} /runpod-volume/.cache/huggingface/{hub, assets, token}
 
 # Download models
 RUN huggingface-cli download --quiet personal1802/NTRMIXillustrious-XLNoob-XL4.0 ntrMIXIllustriousXL_v40.safetensors --local-dir /comfy-checkpoints && \
