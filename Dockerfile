@@ -64,29 +64,29 @@ RUN pip install --no-cache-dir -U \
     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 
 # Install ComfyUI and ComfyUI Manager
-RUN git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git && \
+RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd ComfyUI && \
     git checkout tags/${COMFYUI_VERSION} && \
     pip install --no-cache-dir -r requirements.txt && \
-    git clone --depth 1 https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager && \
+    git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager && \
     cd custom_nodes/ComfyUI-Manager && \
     pip install --no-cache-dir -r requirements.txt
 
 # 1. Clone custom nodes repositories
 RUN cd ComfyUI/custom_nodes && \
-    git clone --depth 1 --recursive https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git && \
-    git clone --depth 1 --recursive https://github.com/receyuki/comfyui-prompt-reader-node.git && \
-    git clone --depth 1 https://github.com/comfyanonymous/ComfyUI_TensorRT.git && \
-    git clone --depth 1 https://github.com/cubiq/ComfyUI_essentials.git && \
-    git clone --depth 1 https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
-    git clone --depth 1 https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git && \
-    git clone --depth 1 https://github.com/jags111/efficiency-nodes-comfyui.git && \
-    git clone --depth 1 https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
-    git clone --depth 1 https://github.com/JPS-GER/ComfyUI_JPS-Nodes.git && \
-    git clone --depth 1 https://github.com/chrisgoringe/cg-use-everywhere.git && \
-    git clone --depth 1 https://github.com/crystian/ComfyUI-Crystools.git && \
-    git clone --depth 1 https://github.com/rgthree/rgthree-comfy.git && \
-    git clone --depth 1 https://github.com/alexopus/ComfyUI-Image-Saver.git
+    git clone --recursive https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git && \
+    git clone --recursive https://github.com/receyuki/comfyui-prompt-reader-node.git && \
+    git clone https://github.com/comfyanonymous/ComfyUI_TensorRT.git && \
+    git clone https://github.com/cubiq/ComfyUI_essentials.git && \
+    git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
+    git clone https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git && \
+    git clone https://github.com/jags111/efficiency-nodes-comfyui.git && \
+    git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
+    git clone https://github.com/JPS-GER/ComfyUI_JPS-Nodes.git && \
+    git clone https://github.com/chrisgoringe/cg-use-everywhere.git && \
+    git clone https://github.com/crystian/ComfyUI-Crystools.git && \
+    git clone https://github.com/rgthree/rgthree-comfy.git && \
+    git clone https://github.com/alexopus/ComfyUI-Image-Saver.git
 
 # Find and install requirements.txt files, and execute install.py scripts in custom nodes,  
 # limiting the search to 2 levels  
