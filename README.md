@@ -1,3 +1,6 @@
+> If you want to exclude pre-installed models and keep only custom nodes, update the container image to `sombi/comfyui:v0.3.15-torch2.6.0-cu124-no_models` \
+> Go to **Edit Template(or Edit Pod) -> Container Image**, make the change, and click **Set Overrides** to save.
+
 | Port | Type (HTTP/TCP) | Function     |
 |------|-----------------|--------------|
 | 22   | TCP             | SSH          |
@@ -17,14 +20,14 @@
 
 #### **Using TIME_ZONE**  
 
-- Find available time zones <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones> (e.g., `America/New_York`, `Asia/Seoul`).
+- Find available time zones **<https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>** (e.g., `America/New_York`, `Asia/Seoul`).
 
 | Application | Log file                         |
 |-------------|----------------------------------|
 | ComfyUI     | /workspace/ComfyUI/user/comfyui_3000.log    |
 | JupyterLab  | /workspace/logs/jupyterlab.log      |
 
-**If you have any suggestions or issues, please leave feedback at <https://github.com/somb1/ComfyUI-Docker-RP/issues>**
+If you have any suggestions or issues, please leave feedback at **<https://github.com/somb1/ComfyUI-Docker-RP/issues>**
 
 ---
 
@@ -41,13 +44,15 @@
 
 #### **Models**
 
-- **Checkpoint Model**:
-  - `ntrMIXIllustriousXL_v40.safetensors` - [Link](https://civitai.com/models/926443?modelVersionId=1061268)
+##### **Checkpoint Model**
 
-- **Upscale Models**:  
-  - `2x-AnimeSharpV4_RCAN.safetensors` - [Link](https://huggingface.co/Kim2091/2x-AnimeSharpV4)
-  - `2x-AnimeSharpV3.pth`  - [Link](https://huggingface.co/Kim2091/AnimeSharpV3)  
-  - `4x-AnimeSharp.pth`  - [Link](https://huggingface.co/Kim2091/AnimeSharp)  
+- `ntrMIXIllustriousXL_v40.safetensors` - [Link](https://civitai.com/models/926443?modelVersionId=1061268)
+
+##### **Upscale Models**
+
+- `2x-AnimeSharpV4_RCAN.safetensors` - [Link](https://huggingface.co/Kim2091/2x-AnimeSharpV4)
+- `2x-AnimeSharpV3.pth`  - [Link](https://huggingface.co/Kim2091/AnimeSharpV3)  
+- `4x-AnimeSharp.pth`  - [Link](https://huggingface.co/Kim2091/AnimeSharp)  
 
 #### **Custom Nodes**  
 
