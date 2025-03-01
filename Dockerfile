@@ -60,7 +60,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd custom_nodes/ComfyUI-Manager && \
     pip install --no-cache-dir -r requirements.txt
 
-# 1. Clone custom nodes repositories
+# Clone custom nodes repositories
 RUN cd ComfyUI/custom_nodes && \
     git clone --recursive https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git && \
     git clone --recursive https://github.com/receyuki/comfyui-prompt-reader-node.git && \
