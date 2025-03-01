@@ -36,7 +36,7 @@ If you have any suggestions or issues, please leave feedback at **<https://githu
 #### **Base System**
 
 - **OS**: Ubuntu 22.04
-- **Framework**: ComfyUI v0.3.15 + ComfyUI Manager + JupyterLab
+- **Framework**: ComfyUI v0.3.18 + ComfyUI Manager + JupyterLab
 - **Python**: 3.12
 - **Libraries**:
   - PyTorch 2.6.0
