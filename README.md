@@ -1,4 +1,4 @@
-> If you want to exclude pre-installed models and keep only custom nodes, update the container image to `sombi/comfyui:v0.3.15-torch2.6.0-cu124-no_models` \
+> If you want to exclude pre-installed models and keep only custom nodes, update the container image to `sombi/comfyui:v0.3.18-torch2.6.0-cu124-no_models` \
 > Go to **Edit Template(or Edit Pod) -> Container Image**, make the change, and click **Set Overrides** to save.
 
 | Port | Type (HTTP/TCP) | Function     |
