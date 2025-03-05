@@ -14,7 +14,7 @@ on:
       COMFYUI_VERSION:
         description: "ComfyUI version"
         required: true
-        default: "v0.3.18"
+        default: "v0.3.19"
       PYTHON_VERSION:
         description: "Python version"
         required: true
