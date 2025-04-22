@@ -1,0 +1,55 @@
+name: Build and Push to Docker Hub - NTRMIX40
+
+on:
+  schedule:
+    # Trigger the workflow every 6 hours using cron
+    - cron: "0 */6 * * *"
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Load .env file
+        run: |
+          # Export environment variables from .env file
+          set -o allexport
+          source .env
+          set +o allexport
+          # Add environment variables to GitHub Actions environment
+          echo "DOCKERHUB_REPO_NAME=$DOCKERHUB_REPO_NAME" >> $GITHUB_ENV
+          echo "BASE_IMAGE=$BASE_IMAGE" >> $GITHUB_ENV
+          echo "PYTHON_VERSION=$PYTHON_VERSION" >> $GITHUB_ENV
+          echo "TORCH_VERSION=$TORCH_VERSION" >> $GITHUB_ENV
+          echo "CUDA_VERSION=$CUDA_VERSION" >> $GITHUB_ENV
+          echo "EXTRA_TAG=$EXTRA_TAG" >> $GITHUB_ENV
+
+      - name: Log in to Docker Hub
+        # Log into Docker Hub using the credentials stored in GitHub Secrets
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Set image tag for PREINSTALLED_MODEL=NTRMIX40
+        run: |
+          IMAGE_TAG="${{ secrets.DOCKER_HUB_USERNAME }}/$DOCKERHUB_REPO_NAME:torch$TORCH_VERSION-$CUDA_VERSION-ntrmix40$EXTRA_TAG"
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Build Docker image with PREINSTALLED_MODEL=NTRMIX40
+        run: |
+          docker build \
+            --build-arg BASE_IMAGE=$BASE_IMAGE \
+            --build-arg PYTHON_VERSION=$PYTHON_VERSION \
+            --build-arg TORCH_VERSION=$TORCH_VERSION \
+            --build-arg CUDA_VERSION=$CUDA_VERSION \
+            --build-arg PREINSTALLED_MODEL=NTRMIX40 \
+            -t $IMAGE_TAG .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push $IMAGE_TAG

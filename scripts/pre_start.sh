@@ -1,7 +1,5 @@
 #!/bin/bash
 
-export PYTHONUNBUFFERED=1
-
 echo "**** syncing venv to workspace, please wait. This could take a while on first startup! ****"
 rsync -au --remove-source-files /venv/ /workspace/venv/ && rm -rf /venv
 # Updating '/venv' to '/workspace/venv' in all text files under '/workspace/venv/bin'
