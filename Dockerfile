@@ -10,7 +10,6 @@ ARG COMFYUI_VERSION
 ARG PYTHON_VERSION
 ARG TORCH_VERSION
 ARG CUDA_VERSION
-ARG PREINSTALLED_CUSTOMNODE=1
 ARG PREINSTALLED_MODEL
 
 # Set basic environment variables
@@ -69,9 +68,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd custom_nodes/ComfyUI-Manager && \
     pip install --no-cache-dir -r requirements.txt
 
-RUN if [ "$PREINSTALLED_CUSTOMNODE" -eq 1 ]; then \
-    cd ComfyUI/custom_nodes && \
-    # Clone custom nodes repositories
+RUN cd ComfyUI/custom_nodes && \
     git clone --recursive https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git && \
     git clone --recursive https://github.com/receyuki/comfyui-prompt-reader-node.git && \
     git clone https://github.com/comfyanonymous/ComfyUI_TensorRT.git && \
@@ -85,10 +82,8 @@ RUN if [ "$PREINSTALLED_CUSTOMNODE" -eq 1 ]; then \
     git clone https://github.com/crystian/ComfyUI-Crystools.git && \
     git clone https://github.com/rgthree/rgthree-comfy.git && \
     git clone https://github.com/alexopus/ComfyUI-Image-Saver.git && \
-    # Find and install requirements.txt files, and execute install.py scripts in custom nodes
     find ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
-    find ComfyUI/custom_nodes -name "install.py" -exec python {} \; \
-    fi
+    find ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 
 # Ensure some directories are created in advance
 RUN mkdir -p /comfy-checkpoints /comfy-upscale_models /workspace/{ComfyUI,logs,venv} 
@@ -101,7 +96,7 @@ RUN if [ "$PREINSTALLED_MODEL" = "NTRMIX40" ]; then \
     fi
 
 RUN wget -q https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /comfy-upscale_models
-RUN wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-upscale_models
+#RUN wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-upscale_models
 
 # NGINX Proxy Configuration
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
