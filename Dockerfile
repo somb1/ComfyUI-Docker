@@ -10,6 +10,8 @@ ARG COMFYUI_VERSION
 ARG PYTHON_VERSION
 ARG TORCH_VERSION
 ARG CUDA_VERSION
+ARG PREINSTALLED_CUSTOMNODE=1
+ARG PREINSTALLED_MODEL
 
 # Set basic environment variables
 ENV SHELL=/bin/bash 
@@ -18,6 +20,12 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu 
 ENV UV_COMPILE_BYTECODE=1
 ENV TZ=Etc/UTC
+
+# Override the default huggingface cache directory.
+ENV HF_HOME="/runpod-volume/.cache/huggingface/"
+
+# Faster transfer of models from the hub to the container
+ENV HF_HUB_ENABLE_HF_TRANSFER="1"
 
 # Shared python package cache
 ENV PIP_CACHE_DIR="/runpod-volume/.cache/pip/"
@@ -30,7 +38,7 @@ WORKDIR /
 RUN apt-get update --yes && \
     apt-get upgrade --yes && \
     apt-get install --yes --no-install-recommends \
-        git wget curl bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential \
+        git wget curl bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential nvtop \
         libgl1 libglib2.0-0 \
         openssh-server ca-certificates && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
@@ -49,19 +57,21 @@ ENV PATH="/workspace/venv/bin:/venv/bin:$PATH"
 RUN pip install --no-cache-dir -U \
     pip setuptools wheel \
     jupyterlab jupyterlab_widgets ipykernel ipywidgets \
+    huggingface_hub hf_transfer \
     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 
 # Install ComfyUI and ComfyUI Manager
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd ComfyUI && \
-    git checkout tags/${COMFYUI_VERSION} && \
+    #git checkout tags/${COMFYUI_VERSION} && \
     pip install --no-cache-dir -r requirements.txt && \
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager && \
     cd custom_nodes/ComfyUI-Manager && \
     pip install --no-cache-dir -r requirements.txt
 
-# Clone custom nodes repositories
-RUN cd ComfyUI/custom_nodes && \
+RUN if [ "$PREINSTALLED_CUSTOMNODE" -eq 1 ]; then \
+    cd ComfyUI/custom_nodes && \
+    # Clone custom nodes repositories
     git clone --recursive https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git && \
     git clone --recursive https://github.com/receyuki/comfyui-prompt-reader-node.git && \
     git clone https://github.com/comfyanonymous/ComfyUI_TensorRT.git && \
@@ -74,20 +84,24 @@ RUN cd ComfyUI/custom_nodes && \
     git clone https://github.com/chrisgoringe/cg-use-everywhere.git && \
     git clone https://github.com/crystian/ComfyUI-Crystools.git && \
     git clone https://github.com/rgthree/rgthree-comfy.git && \
-    git clone https://github.com/alexopus/ComfyUI-Image-Saver.git
-
-# Find and install requirements.txt files, and execute install.py scripts in custom nodes
-RUN find ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
-    find ComfyUI/custom_nodes -name "install.py" -exec python {} \;
+    git clone https://github.com/alexopus/ComfyUI-Image-Saver.git && \
+    # Find and install requirements.txt files, and execute install.py scripts in custom nodes
+    find ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
+    find ComfyUI/custom_nodes -name "install.py" -exec python {} \; \
+    fi
 
 # Ensure some directories are created in advance
-RUN mkdir -p /comfy-checkpoints /comfy-upscale_models /workspace/{ComfyUI,logs,venv}
+RUN mkdir -p /comfy-checkpoints /comfy-upscale_models /workspace/{ComfyUI,logs,venv} 
 
-# Download models
-RUN wget -q https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /comfy-checkpoints
-RUN wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-upscale_models
-RUN wget -q https://huggingface.co/Kim2091/AnimeSharp/resolve/main/4x-AnimeSharp.pth -P /comfy-upscale_models
+# Check the value of PREINSTALLED_MODEL and download the corresponding file
+RUN if [ "$PREINSTALLED_MODEL" = "NTRMIX40" ]; then \
+        wget -q https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /comfy-checkpoints; \
+    elif [ "$PREINSTALLED_MODEL" = "ILXL20" ]; then \
+        wget -q https://huggingface.co/OnomaAIResearch/Illustrious-XL-v2.0/resolve/main/Illustrious-XL-v2.0.safetensors -P /comfy-checkpoints; \
+    fi
+
 RUN wget -q https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /comfy-upscale_models
+RUN wget -q https://huggingface.co/Kim2091/AnimeSharpV3/resolve/main/2x-AnimeSharpV3.pth -P /comfy-upscale_models
 
 # NGINX Proxy Configuration
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
