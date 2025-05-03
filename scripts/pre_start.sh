@@ -30,7 +30,7 @@ done
 
 if [ "${INSTALL_SAGEATTENTION2,,}" = "true" ]; then
     if pip show sageattention > /dev/null 2>&1; then
-        echo "**** SageAttention is already installed. Skipping installation. ****"
+        echo "**** SageAttention2 is already installed. Skipping installation. ****"
     else
         echo "**** SageAttention2 is not installed. Installing, please wait.... (This may take a long time, approximately 5+ minutes.) ****"
         git clone https://github.com/thu-ml/SageAttention.git /SageAttention

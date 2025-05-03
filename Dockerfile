@@ -6,7 +6,6 @@ FROM ${BASE_IMAGE}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Set basic environment variables
-ARG COMFYUI_VERSION
 ARG PYTHON_VERSION
 ARG TORCH_VERSION
 ARG CUDA_VERSION
