@@ -1,6 +1,3 @@
-> If you want to exclude pre-installed models and keep only custom nodes, update the container image to `sombi/comfyui:base-torch2.6.0-cu124` \
-> Go to **Edit Template(or Edit Pod) -> Container Image**, make the change, and click **Set Overrides** to save.
-
 ### Exposed Ports
 
 | Port | Type (HTTP/TCP) | Function     |
@@ -11,6 +8,20 @@
 
 ---
 
+### Container Image
+
+| Image Name | Description                      |
+| ---------- | -------------------------------- |
+| `base`     | Custom nodes only.               |
+| `ntrmix40` | Custom nodes + `ntrMIXIllustriousXL_v40` model. |
+| `ilxl20`   | Custom nodes + `Illustrious-XL-v2.0` model.   |
+
+#### How to Set Container Image
+
+To use a specific container image, go to **Edit Template** or **Edit Pod**, set the desired **Container Image**, and apply the changes.
+
+---
+
 ### Environment Variables
 
 | Variable                   | Description                                                                    | Default        |
@@ -18,11 +29,11 @@
 | `JUPYTERLAB_PASSWORD`      | Password for JupyterLab. If unset, no password will be required.               | (Not Set)      |
 | `TIME_ZONE`                | System timezone. Defaults to `Etc/UTC` if unset.                               | `Etc/UTC`      |
 | `COMFYUI_EXTRA_ARGS`       | Extra startup options for ComfyUI, e.g., `--fast`.                             | (Not Set)      |
-| `INSTALL_SAGEATTENTION2`    | Install SageAttention2 at startup (`True` or `False`). May take over 5 minutes. | `True`         |
+| `INSTALL_SAGEATTENTION2`    | Install SageAttention2 at startup (`True` or `False`). May take over 5 minutes. | `False`         |
 
-> **Note:** Installing SageAttention2 works correctly on GPUs from the Ampere architecture or newer.
+> **Note**: SageAttention2 installs successfully only on GPUs with the Ampere architecture or later.
 
-### How to Set Environment Variables
+#### How to Set Environment Variables
 
 1. On the **Edit Pod** or **Edit Template** screen, click **"Add Environment Variable."**
 2. For **Key**, enter the name of the variable (e.g., `COMFYUI_EXTRA_ARGS`).
@@ -39,7 +50,7 @@
 | ComfyUI     | /workspace/ComfyUI/user/comfyui_3000.log    |
 | JupyterLab  | /workspace/logs/jupyterlab.log      |
 
-If you have any suggestions or issues, please leave feedback at **<https://github.com/somb1/ComfyUI-Docker-RP/issues>**
+> If you encounter any issues or have suggestions, feel free to leave feedback at **[GitHub Issues](https://github.com/somb1/ComfyUI-Docker-RP/issues)**.
 
 ---
 
@@ -65,8 +76,6 @@ If you have any suggestions or issues, please leave feedback at **<https://githu
 ##### **Upscale Models**
 
 - `2x-AnimeSharpV4_RCAN.safetensors` - [Link](https://huggingface.co/Kim2091/2x-AnimeSharpV4)
-- `2x-AnimeSharpV3.pth`  - [Link](https://huggingface.co/Kim2091/AnimeSharpV3)  
-- `4x-AnimeSharp.pth`  - [Link](https://huggingface.co/Kim2091/AnimeSharp)  
 
 #### **Custom Nodes**  
 
