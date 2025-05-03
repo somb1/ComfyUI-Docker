@@ -12,9 +12,9 @@
 
 | Image Name | Description                      |
 | ---------- | -------------------------------- |
-| `base`     | Custom nodes only.               |
-| `ntrmix40` | Custom nodes + `ntrMIXIllustriousXL_v40` model. |
-| `ilxl20`   | Custom nodes + `Illustrious-XL-v2.0` model.   |
+| `sombi/comfyui:base-torch2.6.0-cu124`     | Custom nodes only.               |
+| `sombi/comfyui:ntrmix40-torch2.6.0-cu124` | Custom nodes + `ntrMIXIllustriousXL_v40` model. |
+| `sombi/comfyui:ilxl20-torch2.6.0-cu124`   | Custom nodes + `Illustrious-XL-v2.0` model.   |
 
 #### How to Set Container Image
 
