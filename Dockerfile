@@ -16,7 +16,6 @@ ARG PREINSTALLED_MODEL
 ENV SHELL=/bin/bash 
 ENV PYTHONUNBUFFERED=True 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu 
 ENV UV_COMPILE_BYTECODE=1
 ENV TZ=Etc/UTC
 
@@ -38,7 +37,7 @@ RUN apt-get update --yes && \
     apt-get upgrade --yes && \
     apt-get install --yes --no-install-recommends \
         git wget curl bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential nvtop \
-        libgl1 libglib2.0-0 \
+        libgl1 libglib2.0-0 clang libomp-dev ninja-build \
         openssh-server ca-certificates && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
@@ -57,6 +56,8 @@ RUN pip install --no-cache-dir -U \
     pip setuptools wheel \
     jupyterlab jupyterlab_widgets ipykernel ipywidgets \
     huggingface_hub hf_transfer \
+    numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
+    triton==3.2.0 \
     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 
 # Install ComfyUI and ComfyUI Manager
@@ -85,16 +86,17 @@ RUN cd /ComfyUI/custom_nodes && \
     find /ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 
 # Ensure some directories are created in advance
-RUN mkdir -p /comfy-checkpoints /comfy-upscale_models /workspace/{ComfyUI,logs,venv} 
+RUN mkdir -p /preinstalled_models/{checkpoints,upscale_models} /workspace/{ComfyUI,logs,venv} 
 
 # Check the value of PREINSTALLED_MODEL and download the corresponding file
 RUN if [ "$PREINSTALLED_MODEL" = "NTRMIX40" ]; then \
-        wget -q https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /comfy-checkpoints; \
+        wget --no-verbose https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /preinstalled_models/checkpoints; \
     elif [ "$PREINSTALLED_MODEL" = "ILXL20" ]; then \
-        wget -q https://huggingface.co/OnomaAIResearch/Illustrious-XL-v2.0/resolve/main/Illustrious-XL-v2.0.safetensors -P /comfy-checkpoints; \
+        wget --no-verbose https://huggingface.co/OnomaAIResearch/Illustrious-XL-v2.0/resolve/main/Illustrious-XL-v2.0.safetensors -P /preinstalled_models/checkpoints; \
+    fi && \
+    if [ -n "$PREINSTALLED_MODEL" ]; then \
+        wget --no-verbose https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /preinstalled_models/upscale_models; \
     fi
-
-RUN wget -q https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /comfy-upscale_models
 
 # NGINX Proxy Configuration
 COPY proxy/nginx.conf /etc/nginx/nginx.conf

@@ -1,5 +1,7 @@
-> If you want to exclude pre-installed models and keep only custom nodes, update the container image to `sombi/comfyui:v0.3.18-torch2.6.0-cu124-no_models` \
+> If you want to exclude pre-installed models and keep only custom nodes, update the container image to `sombi/comfyui:base-torch2.6.0-cu124` \
 > Go to **Edit Template(or Edit Pod) -> Container Image**, make the change, and click **Set Overrides** to save.
+
+### Exposed Ports
 
 | Port | Type (HTTP/TCP) | Function     |
 |------|-----------------|--------------|
@@ -7,20 +9,30 @@
 | 3000 | HTTP            | ComfyUI      |
 | 8888 | HTTP            | JupyterLab  |
 
-| Environment Variable     | Description                                                                 | Default      |
-|--------------------------|-----------------------------------------------------------------------------|--------------|
-| `JUPYTERLAB_PASSWORD`    | Password for JupyterLab. If unset, no password is required.                 | (Not Set)    |
-| `TIME_ZONE`              | System timezone. Defaults to `Etc/UTC` if unset.                            | `Etc/UTC`    |
-| `COMFYUI_EXTRA_ARGS`      | Passes additional startup arguments to ComfyUI, allowing extra options like `--fp16-unet` and `--fast`. | (Not Set)    |
+---
 
-#### **Using COMFYUI_EXTRA_ARGS**
+### Environment Variables
 
-- On the "Edit Pod" or "Edit Template" screen, click "Add Environment Variables."
-- For the key, enter `COMFYUI_EXTRA_ARGS`, and in the value field, add the desired startup arguments.
+| Variable                   | Description                                                                    | Default        |
+|----------------------------|--------------------------------------------------------------------------------|----------------|
+| `JUPYTERLAB_PASSWORD`      | Password for JupyterLab. If unset, no password will be required.               | (Not Set)      |
+| `TIME_ZONE`                | System timezone. Defaults to `Etc/UTC` if unset.                               | `Etc/UTC`      |
+| `COMFYUI_EXTRA_ARGS`       | Extra startup options for ComfyUI, e.g., `--fast`.                             | (Not Set)      |
+| `INSTALL_SAGEATTENTION2`    | Install SageAttention2 at startup (`True` or `False`). May take over 5 minutes. | `True`         |
 
-#### **Using TIME_ZONE**  
+> **Note:** Installing SageAttention2 works correctly on GPUs from the Ampere architecture or newer.
 
-- Find available time zones **<https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>** (e.g., `America/New_York`, `Asia/Seoul`).
+### How to Set Environment Variables
+
+1. On the **Edit Pod** or **Edit Template** screen, click **"Add Environment Variable."**
+2. For **Key**, enter the name of the variable (e.g., `COMFYUI_EXTRA_ARGS`).
+3. For **Value**, enter the desired setting or option.
+
+> For time zones, refer to [this list of time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g., `America/New_York`).
+
+---
+
+### Log Files
 
 | Application | Log file                         |
 |-------------|----------------------------------|
@@ -36,11 +48,13 @@ If you have any suggestions or issues, please leave feedback at **<https://githu
 #### **Base System**
 
 - **OS**: Ubuntu 22.04
-- **Framework**: ComfyUI v0.3.18 + ComfyUI Manager + JupyterLab
+- **Framework**: ComfyUI + ComfyUI Manager + JupyterLab
 - **Python**: 3.12
 - **Libraries**:
   - PyTorch 2.6.0
   - CUDA 12.4
+  - [huggingface_hub](https://huggingface.co/docs/huggingface_hub/index), [hf_transfer](https://huggingface.co/docs/huggingface_hub/index)
+  - [nvtop](https://github.com/Syllo/nvtop)
 
 #### **Models**
 
