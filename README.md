@@ -64,6 +64,7 @@ To use a specific container image, go to **Edit Template** or **Edit Pod**, set 
 - **Libraries**:
   - PyTorch 2.6.0
   - CUDA 12.4
+  - Triton 3.2.0
   - [huggingface_hub](https://huggingface.co/docs/huggingface_hub/index), [hf_transfer](https://huggingface.co/docs/huggingface_hub/index)
   - [nvtop](https://github.com/Syllo/nvtop)
 
