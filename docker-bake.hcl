@@ -16,7 +16,7 @@ variable "CUDA_VERSION" {
 }
 
 variable "EXTRA_TAG" {
-    default = "-dev"
+    default = ""
 }
 
 function "tag" {
