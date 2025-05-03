@@ -29,7 +29,7 @@ To use a specific container image, go to **Edit Template** or **Edit Pod**, set 
 | `JUPYTERLAB_PASSWORD`      | Password for JupyterLab. If unset, no password will be required.               | (Not Set)      |
 | `TIME_ZONE`                | System timezone. Defaults to `Etc/UTC` if unset.                               | `Etc/UTC`      |
 | `COMFYUI_EXTRA_ARGS`       | Extra startup options for ComfyUI, e.g., `--fast`.                             | (Not Set)      |
-| `INSTALL_SAGEATTENTION2`    | Install SageAttention2 at startup (`True` or `False`). May take over 5 minutes. | `False`         |
+| `INSTALL_SAGEATTENTION2`    | Install [SageAttention2](https://github.com/thu-ml/SageAttention) at startup (`True` or `False`). May take over 5 minutes. | `False`         |
 
 > **Note**: SageAttention2 installs successfully only on GPUs with the Ampere architecture or later.
 
