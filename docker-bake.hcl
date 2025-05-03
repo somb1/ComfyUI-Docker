@@ -50,11 +50,15 @@ target "base" {
 target "ntrmix40" {
     inherits = ["_common"]
     tags = tag("ntrmix40")
-    PREINSTALLED_MODEL = "NTRMIX40"
+    args = {
+        PREINSTALLED_MODEL = "NTRMIX40"
+    }
 }
 
 target "ilxl20" {
     inherits = ["_common"]
     tags = tag("ilxl20")
-    PREINSTALLED_MODEL = "ILXL20"
+    args = {
+        PREINSTALLED_MODEL = "ILXL20"
+    }
 }

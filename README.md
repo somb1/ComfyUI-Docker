@@ -16,7 +16,7 @@
 | `sombi/comfyui:ntrmix40-torch2.6.0-cu124` | Custom nodes + `ntrMIXIllustriousXL_v40` model. |
 | `sombi/comfyui:ilxl20-torch2.6.0-cu124`   | Custom nodes + `Illustrious-XL-v2.0` model.   |
 
-#### How to Set Container Image
+### How to Set Container Image
 
 To use a specific container image, go to **Edit Template** or **Edit Pod**, set the desired **Container Image**, and apply the changes.
 
@@ -33,7 +33,7 @@ To use a specific container image, go to **Edit Template** or **Edit Pod**, set 
 
 > **Note**: SageAttention2 installs successfully only on GPUs with the Ampere architecture or later.
 
-#### How to Set Environment Variables
+### How to Set Environment Variables
 
 1. On the **Edit Pod** or **Edit Template** screen, click **"Add Environment Variable."**
 2. For **Key**, enter the name of the variable (e.g., `COMFYUI_EXTRA_ARGS`).
@@ -70,11 +70,12 @@ To use a specific container image, go to **Edit Template** or **Edit Pod**, set 
 
 #### **Models**
 
-##### **Checkpoint Model**
+##### **Checkpoint Model** (Depends on container image)
 
 - `ntrMIXIllustriousXL_v40.safetensors` - [Link](https://civitai.com/models/926443?modelVersionId=1061268)
+- `Illustrious-XL-v2.0.safetensors` - [Link](https://huggingface.co/OnomaAIResearch/Illustrious-XL-v2.0)
 
-##### **Upscale Models**
+##### **Upscale Model** (Not included in the base image)
 
 - `2x-AnimeSharpV4_RCAN.safetensors` - [Link](https://huggingface.co/Kim2091/2x-AnimeSharpV4)
 
