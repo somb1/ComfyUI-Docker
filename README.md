@@ -14,7 +14,6 @@
 | ---------- | -------------------------------- |
 | `sombi/comfyui:base-torch2.6.0-cu124`     | Custom nodes only.               |
 | `sombi/comfyui:ntrmix40-torch2.6.0-cu124` | Custom nodes + `ntrMIXIllustriousXL_v40` model. |
-| `sombi/comfyui:ilxl20-torch2.6.0-cu124`   | Custom nodes + `Illustrious-XL-v2.0` model.   |
 
 ### How to Set Container Image
 
@@ -62,20 +61,19 @@ To use a specific container image, go to **Edit Template** or **Edit Pod**, set 
 - **Framework**: ComfyUI + ComfyUI Manager + JupyterLab
 - **Python**: 3.12
 - **Libraries**:
-  - PyTorch 2.6.0
-  - CUDA 12.4
+  - PyTorch 2.7.0
+  - CUDA 12.4 | 12.6 | 12.7
   - Triton 3.2.0
   - [huggingface_hub](https://huggingface.co/docs/huggingface_hub/index), [hf_transfer](https://huggingface.co/docs/huggingface_hub/index)
   - [nvtop](https://github.com/Syllo/nvtop)
 
 #### **Models**
 
-##### **Checkpoint Model** (Depends on container image)
+##### **Checkpoint Model** (Not included in the base image)
 
 - `ntrMIXIllustriousXL_v40.safetensors` - [Link](https://civitai.com/models/926443?modelVersionId=1061268)
-- `Illustrious-XL-v2.0.safetensors` - [Link](https://huggingface.co/OnomaAIResearch/Illustrious-XL-v2.0)
 
-##### **Upscale Model** (Not included in the base image)
+##### **Upscale Model**
 
 - `2x-AnimeSharpV4_RCAN.safetensors` - [Link](https://huggingface.co/Kim2091/2x-AnimeSharpV4)
 

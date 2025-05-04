@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [base, ntrmix40, ilxl20]
+        target: [base, ntrmix40]
         cuda: [12-4, 12-6, 12-8]
     steps:
       - name: Maximize build space
