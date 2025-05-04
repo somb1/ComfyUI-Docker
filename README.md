@@ -38,7 +38,7 @@ To change images: Go to **Edit Pod/Template** → Set `Container Image`.
 | Variable                 | Description                                                                                 | Default   |
 | ------------------------ | ------------------------------------------------------------------------------------------- | --------- |
 | `JUPYTERLAB_PASSWORD`    | Password for JupyterLab                                                         | (unset)   |
-| `TIME_ZONE`              | Timezone (e.g., `Asia/Seoul`)                                                               | `Etc/UTC` |
+| `TIME_ZONE`              | [Timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g., `Asia/Seoul`)                                                               | `Etc/UTC` |
 | `COMFYUI_EXTRA_ARGS`     | Extra ComfyUI options                                                      | `--fast`   |
 | `INSTALL_SAGEATTENTION2` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) at start (`True`/`False`) | `False`   |
 
