@@ -12,6 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         target: [base, ntrmix40, ilxl20]
+        cuda: [12-4, 12-6, 12-8]
     steps:
       - name: Maximize build space
         uses: AdityaGarg8/remove-unwanted-software@v5
@@ -40,5 +41,5 @@ jobs:
       - name: Build and push
         uses: docker/bake-action@v6
         with:
-          targets: ${{ matrix.target }}
+          targets: ${{ matrix.target }}-${{ matrix.cuda }}
           push: true

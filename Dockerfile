@@ -88,14 +88,11 @@ RUN cd /ComfyUI/custom_nodes && \
 RUN mkdir -p /preinstalled_models/{checkpoints,upscale_models} /workspace/{ComfyUI,logs,venv} 
 
 # Check the value of PREINSTALLED_MODEL and download the corresponding file
-RUN if [ "$PREINSTALLED_MODEL" = "NTRMIX40" ]; then \
-        wget --no-verbose https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /preinstalled_models/checkpoints; \
-    elif [ "$PREINSTALLED_MODEL" = "ILXL20" ]; then \
-        wget --no-verbose https://huggingface.co/OnomaAIResearch/Illustrious-XL-v2.0/resolve/main/Illustrious-XL-v2.0.safetensors -P /preinstalled_models/checkpoints; \
-    fi && \
-    if [ -n "$PREINSTALLED_MODEL" ]; then \
-        wget --no-verbose https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /preinstalled_models/upscale_models; \
-    fi
+RUN case "$PREINSTALLED_MODEL" in \
+        NTRMIX40) \
+            wget --no-verbose https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /preinstalled_models/checkpoints ;; \
+    esac && \
+    wget --no-verbose https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /preinstalled_models/upscale_models
 
 # NGINX Proxy Configuration
 COPY proxy/nginx.conf /etc/nginx/nginx.conf

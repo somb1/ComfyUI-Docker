@@ -2,17 +2,11 @@ variable "DOCKERHUB_REPO_NAME" {
     default = "sombi/comfyui"
 }
 
-variable "BASE_IMAGE" {
-    default = "nvidia/cuda:12.4.1-devel-ubuntu22.04"
-}
 variable "PYTHON_VERSION" {
     default = "3.12"
 }
 variable "TORCH_VERSION" {
-    default = "2.6.0"
-}
-variable "CUDA_VERSION" {
-    default = "cu124"
+    default = "2.7.0"
 }
 
 variable "EXTRA_TAG" {
@@ -20,45 +14,75 @@ variable "EXTRA_TAG" {
 }
 
 function "tag" {
-    params = [tag]
-    result = ["${DOCKERHUB_REPO_NAME}:${tag}-torch${TORCH_VERSION}-${CUDA_VERSION}${EXTRA_TAG}"]
-}
-
-group "all" {
-    targets = ["base", "ntrmix40", "ilxl20"]
-    default = "base"
+    params = [tag, cuda]
+    result = ["${DOCKERHUB_REPO_NAME}:${tag}-torch${TORCH_VERSION}-${cuda}${EXTRA_TAG}"]
 }
 
 target "_common" {
     dockerfile = "Dockerfile"
     context = "."
     args = {
-        BASE_IMAGE         = BASE_IMAGE
         PYTHON_VERSION     = PYTHON_VERSION
         TORCH_VERSION      = TORCH_VERSION
-        CUDA_VERSION       = CUDA_VERSION
     }
-    cache-to   = ["type=gha,compression=zstd"]
-    cache-from = ["type=gha"]
 }
 
-target "base" {
+target "_cu124" {
     inherits = ["_common"]
-    tags = tag("base")
+    args = {
+        BASE_IMAGE         = "nvidia/cuda:12.4.1-devel-ubuntu22.04"
+        CUDA_VERSION       = "cu124"
+    }
 }
 
-target "ntrmix40" {
+target "_cu126" {
     inherits = ["_common"]
-    tags = tag("ntrmix40")
+    args = {
+        BASE_IMAGE         = "nvidia/cuda:12.6.3-devel-ubuntu22.04"
+        CUDA_VERSION       = "cu126"
+    }
+}
+
+target "_cu128" {
+    inherits = ["_common"]
+    args = {
+        BASE_IMAGE         = "nvidia/cuda:12.8.1-devel-ubuntu22.04"
+        CUDA_VERSION       = "cu128"
+    }
+}
+
+target "_ntrmix40" {
     args = {
         PREINSTALLED_MODEL = "NTRMIX40"
     }
 }
 
-target "ilxl20" {
-    inherits = ["_common"]
-    tags = tag("ilxl20")
-    args = {
-        PREINSTALLED_MODEL = "ILXL20"
-    }
+target "base-12-4" {
+    inherits = ["_cu124"]
+    tags = tag("base", "cu124")
+}
+
+target "base-12-6" {
+    inherits = ["_cu126"]
+    tags = tag("base", "cu126")
+}
+
+target "base-12-8" {
+    inherits = ["_cu128"]
+    tags = tag("base", "cu128")
+}
+
+target "ntrmix40-12-4" {
+    inherits = ["_cu124", "_ntrmix40"]
+    tags = tag("ntrmix40", "cu124")
+}
+
+target "ntrmix40-12-6" {
+    inherits = ["_cu126", "_ntrmix40"]
+    tags = tag("ntrmix40", "cu126")
+}
+
+target "ntrmix40-12-8" {
+    inherits = ["_cu128", "_ntrmix40"]
+    tags = tag("ntrmix40", "cu128")
 }
