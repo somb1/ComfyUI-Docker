@@ -59,14 +59,14 @@ To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value)
 
 ### 🧩 Pre-Installed Components
 
-#### System
+#### **System**
 
 * **OS**: Ubuntu 22.04
 * **Python**: 3.12
 * **Framework**: ComfyUI + Manager + JupyterLab
 * **Libraries**: PyTorch 2.7.0, CUDA (12.4–12.8), Triton, [hf\_hub](https://huggingface.co/docs/huggingface_hub), [nvtop](https://github.com/Syllo/nvtop)
 
-#### Models
+#### **Models**
 
 * **Checkpoint**: [ntrMIXIllustriousXL_v40.safetensors](https://civitai.com/models/926443?modelVersionId=1061268)
 * **Upscaler**: [2x-AnimeSharpV4_RCAN.safetensors](https://huggingface.co/Kim2091/2x-AnimeSharpV4)
