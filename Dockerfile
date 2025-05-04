@@ -15,7 +15,6 @@ ARG PREINSTALLED_MODEL
 ENV SHELL=/bin/bash 
 ENV PYTHONUNBUFFERED=True 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV UV_COMPILE_BYTECODE=1
 ENV TZ=Etc/UTC
 
 # Override the default huggingface cache directory.
