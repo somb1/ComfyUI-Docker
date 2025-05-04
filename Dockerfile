@@ -56,7 +56,7 @@ RUN pip install --no-cache-dir -U \
     jupyterlab jupyterlab_widgets ipykernel ipywidgets \
     huggingface_hub hf_transfer \
     numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
-    triton==3.2.0 \
+    triton \
     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 
 # Install ComfyUI and ComfyUI Manager
