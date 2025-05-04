@@ -64,7 +64,7 @@ To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value)
 * **OS**: Ubuntu 22.04
 * **Python**: 3.12
 * **Framework**: ComfyUI + Manager + JupyterLab
-* **Libraries**: PyTorch 2.7.0, CUDA (12.4–12.8), Triton, [huggingface_hub](https://huggingface.co/docs/huggingface_hub), [nvtop](https://github.com/Syllo/nvtop)
+* **Libraries**: PyTorch 2.7.0, CUDA (12.4–12.8), Triton, [hf\_hub](https://huggingface.co/docs/huggingface_hub), [nvtop](https://github.com/Syllo/nvtop)
 
 #### Models
 
