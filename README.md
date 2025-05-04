@@ -71,7 +71,7 @@ To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value)
 * **Checkpoint**: [ntrMIXIllustriousXL_v40.safetensors](https://civitai.com/models/926443?modelVersionId=1061268)
 * **Upscaler**: [2x-AnimeSharpV4_RCAN.safetensors](https://huggingface.co/Kim2091/2x-AnimeSharpV4)
 
-#### Custom Nodes
+#### **Custom Nodes**
 
 * [ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts)
 * [ComfyUI-Crystools](https://github.com/crystian/ComfyUI-Crystools)
@@ -79,13 +79,20 @@ To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value)
 * [ComfyUI-Image-Saver](https://github.com/alexopus/ComfyUI-Image-Saver)
 * [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack)
 * [ComfyUI-Impact-Subpack](https://github.com/ltdrdata/ComfyUI-Impact-Subpack)
-* [ComfyUI\_JPS-Nodes](https://github.com/JPS-GER/ComfyUI_JPS-Nodes)
-* [ComfyUI\_TensorRT](https://github.com/comfyanonymous/ComfyUI_TensorRT)
-* [ComfyUI\_UltimateSDUpscale](https://github.com/ssitu/ComfyUI_UltimateSDUpscale)
+* [ComfyUI_JPS-Nodes](https://github.com/JPS-GER/ComfyUI_JPS-Nodes)
+* [ComfyUI_TensorRT](https://github.com/comfyanonymous/ComfyUI_TensorRT)
+* [ComfyUI_UltimateSDUpscale](https://github.com/ssitu/ComfyUI_UltimateSDUpscale)
 * [comfyui-prompt-reader-node](https://github.com/receyuki/comfyui-prompt-reader-node)
 * [cg-use-everywhere](https://github.com/chrisgoringe/cg-use-everywhere)
 * [efficiency-nodes-comfyui](https://github.com/jags111/efficiency-nodes-comfyui)
 * [rgthree-comfy](https://github.com/rgthree/rgthree-comfy)
+* [ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper)
+* [ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite)
+* [ComfyUI-GGUF](https://github.com/city96/ComfyUI-GGUF)
+* [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
+* [ComfyUI-WanStartEndFramesNative](https://github.com/Flow-two/ComfyUI-WanStartEndFramesNative)
+* [ComfyUI-mxToolkit](https://github.com/Smirnov75/ComfyUI-mxToolkit)
+* [ComfyUI-Frame-Interpolation](https://github.com/Fannovel16/ComfyUI-Frame-Interpolation)
 
 ---
 
