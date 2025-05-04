@@ -1,3 +1,5 @@
+> Note: This Docker container updates every 8 hours to stay up to date.
+
 ### Exposed Ports
 
 | Port | Type (HTTP/TCP) | Function     |
