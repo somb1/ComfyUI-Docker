@@ -1,96 +1,94 @@
-> Note: This Docker container updates every 8 hours to stay up to date.
+> 🔄 Updated every 8 hours to always stay on the latest version.
 
-### Exposed Ports
+### 🔌 Exposed Ports
 
-| Port | Type (HTTP/TCP) | Function     |
-|------|-----------------|--------------|
-| 22   | TCP             | SSH          |
-| 3000 | HTTP            | ComfyUI      |
-| 8888 | HTTP            | JupyterLab  |
-
----
-
-### Container Image
-
-| Image Name | Description                      |
-| ---------- | -------------------------------- |
-| `sombi/comfyui:base-torch2.6.0-cu124`     | Custom nodes only.               |
-| `sombi/comfyui:ntrmix40-torch2.6.0-cu124` | Custom nodes + `ntrMIXIllustriousXL_v40` model. |
-
-### How to Set Container Image
-
-To use a specific container image, go to **Edit Template** or **Edit Pod**, set the desired **Container Image**, and apply the changes.
+| Port | Type | Purpose    |
+| ---- | ---- | ---------- |
+| 22   | TCP  | SSH        |
+| 3000 | HTTP | ComfyUI    |
+| 8888 | HTTP | JupyterLab |
 
 ---
 
-### Environment Variables
+### 🏷️ Tag Structure
 
-| Variable                   | Description                                                                    | Default        |
-|----------------------------|--------------------------------------------------------------------------------|----------------|
-| `JUPYTERLAB_PASSWORD`      | Password for JupyterLab. If unset, no password will be required.               | (Not Set)      |
-| `TIME_ZONE`                | System timezone. Defaults to `Etc/UTC` if unset.                               | `Etc/UTC`      |
-| `COMFYUI_EXTRA_ARGS`       | Extra startup options for ComfyUI, e.g., `--fast`.                             | (Not Set)      |
-| `INSTALL_SAGEATTENTION2`    | Install [SageAttention2](https://github.com/thu-ml/SageAttention) at startup (`True` or `False`). May take over 5 minutes. | `False`         |
-
-> **Note**: SageAttention2 installs successfully only on GPUs with the Ampere architecture or later.
-
-### How to Set Environment Variables
-
-1. On the **Edit Pod** or **Edit Template** screen, click **"Add Environment Variable."**
-2. For **Key**, enter the name of the variable (e.g., `COMFYUI_EXTRA_ARGS`).
-3. For **Value**, enter the desired setting or option.
-
-> For time zones, refer to [this list of time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g., `America/New_York`).
+* `ntrmix40`: Includes **NTRMix40** checkpoint + Upscale model
+* `base`: ComfyUI with custom nodes only, no models.
+* `cu124`, `cu126`, `cu128`: CUDA version (12.4 / 12.6 / 12.8)
 
 ---
 
-### Log Files
+### 🧱 Image Matrix
 
-| Application | Log file                         |
-|-------------|----------------------------------|
-| ComfyUI     | /workspace/ComfyUI/user/comfyui_3000.log    |
-| JupyterLab  | /workspace/logs/jupyterlab.log      |
+| Image Name                  | Checkpoint | CUDA |
+| --------------------------- | ---------- | ---- |
+| `sombi/comfyui:ntrmix40-torch2.7.0-cu124` | ✅          | 12.4 |
+| `sombi/comfyui:ntrmix40-torch2.7.0-cu126` | ✅          | 12.6 |
+| `sombi/comfyui:ntrmix40-torch2.7.0-cu128` | ✅          | 12.8 |
+| `sombi/comfyui:base-torch2.7.0-cu124`     | ❌          | 12.4 |
+| `sombi/comfyui:base-torch2.7.0-cu126`     | ❌          | 12.6 |
+| `sombi/comfyui:base-torch2.7.0-cu128`     | ❌          | 12.8 |
 
-> If you encounter any issues or have suggestions, feel free to leave feedback at **[GitHub Issues](https://github.com/somb1/ComfyUI-Docker-RP/issues)**.
+To change images: Go to **Edit Pod/Template** → Set `Container Image`.
 
 ---
 
-### **Pre-Installed Components**
+### ⚙️ Environment Variables
 
-#### **Base System**
+| Variable                 | Description                                                                                 | Default   |
+| ------------------------ | ------------------------------------------------------------------------------------------- | --------- |
+| `JUPYTERLAB_PASSWORD`    | Password for JupyterLab (optional)                                                          | (unset)   |
+| `TIME_ZONE`              | Timezone (e.g., `Asia/Seoul`)                                                               | `Etc/UTC` |
+| `COMFYUI_EXTRA_ARGS`     | Extra ComfyUI options (e.g., `--fast`)                                                      | (unset)   |
+| `INSTALL_SAGEATTENTION2` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) at start (`True`/`False`) | `False`   |
 
-- **OS**: Ubuntu 22.04
-- **Framework**: ComfyUI + ComfyUI Manager + JupyterLab
-- **Python**: 3.12
-- **Libraries**:
-  - PyTorch 2.7.0
-  - CUDA 12.4 | 12.6 | 12.7
-  - Triton 3.2.0
-  - [huggingface_hub](https://huggingface.co/docs/huggingface_hub/index), [hf_transfer](https://huggingface.co/docs/huggingface_hub/index)
-  - [nvtop](https://github.com/Syllo/nvtop)
+> ⚠️ SageAttention2 requires Ampere or newer GPUs and takes \~5 min to install.
 
-#### **Models**
+To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value)
 
-##### **Checkpoint Model** (Not included in the base image)
+---
 
-- `ntrMIXIllustriousXL_v40.safetensors` - [Link](https://civitai.com/models/926443?modelVersionId=1061268)
+### 📁 Logs
 
-##### **Upscale Model**
+| App        | Location                                   |
+| ---------- | ------------------------------------------ |
+| ComfyUI    | `/workspace/ComfyUI/user/comfyui_3000.log` |
+| JupyterLab | `/workspace/logs/jupyterlab.log`           |
 
-- `2x-AnimeSharpV4_RCAN.safetensors` - [Link](https://huggingface.co/Kim2091/2x-AnimeSharpV4)
+---
 
-#### **Custom Nodes**  
+### 🧩 Pre-Installed Components
 
-- `ComfyUI-Custom-Scripts` - [Link](https://github.com/pythongosssss/ComfyUI-Custom-Scripts)  
-- `ComfyUI-Crystools` - [Link](https://github.com/crystian/ComfyUI-Crystools)  
-- `ComfyUI-essentials` - [Link](https://github.com/cubiq/ComfyUI_essentials)  
-- `ComfyUI-Image-Saver` - [Link](https://github.com/alexopus/ComfyUI-Image-Saver)  
-- `ComfyUI-Impact-Pack` - [Link](https://github.com/ltdrdata/ComfyUI-Impact-Pack)  
-- `ComfyUI-Impact-Subpack` - [Link](https://github.com/ltdrdata/ComfyUI-Impact-Subpack)  
-- `ComfyUI_JPS-Nodes` - [Link](https://github.com/JPS-GER/ComfyUI_JPS-Nodes)  
-- `ComfyUI_TensorRT` - [Link](https://github.com/comfyanonymous/ComfyUI_TensorRT)  
-- `ComfyUI_UltimateSDUpscale` - [Link](https://github.com/ssitu/ComfyUI_UltimateSDUpscale)  
-- `comfyui-prompt-reader-node` - [Link](https://github.com/receyuki/comfyui-prompt-reader-node)  
-- `cg-use-everywhere` - [Link](https://github.com/chrisgoringe/cg-use-everywhere)  
-- `efficiency-nodes-comfyui` - [Link](https://github.com/jags111/efficiency-nodes-comfyui)  
-- `rgthree-comfy` - [Link](https://github.com/rgthree/rgthree-comfy)
+#### System
+
+* **OS**: Ubuntu 22.04
+* **Python**: 3.12
+* **Framework**: ComfyUI + Manager + JupyterLab
+* **Libraries**: PyTorch 2.7.0, CUDA (12.4–12.8), Triton, [huggingface_hub](https://huggingface.co/docs/huggingface_hub), [nvtop](https://github.com/Syllo/nvtop)
+
+#### Models
+
+* **Checkpoint**: [ntrMIXIllustriousXL_v40.safetensors](https://civitai.com/models/926443?modelVersionId=1061268)
+* **Upscaler**: [2x-AnimeSharpV4_RCAN.safetensors](https://huggingface.co/Kim2091/2x-AnimeSharpV4)
+
+#### Custom Nodes
+
+* [ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts)
+* [ComfyUI-Crystools](https://github.com/crystian/ComfyUI-Crystools)
+* [ComfyUI-essentials](https://github.com/cubiq/ComfyUI_essentials)
+* [ComfyUI-Image-Saver](https://github.com/alexopus/ComfyUI-Image-Saver)
+* [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack)
+* [ComfyUI-Impact-Subpack](https://github.com/ltdrdata/ComfyUI-Impact-Subpack)
+* [ComfyUI\_JPS-Nodes](https://github.com/JPS-GER/ComfyUI_JPS-Nodes)
+* [ComfyUI\_TensorRT](https://github.com/comfyanonymous/ComfyUI_TensorRT)
+* [ComfyUI\_UltimateSDUpscale](https://github.com/ssitu/ComfyUI_UltimateSDUpscale)
+* [comfyui-prompt-reader-node](https://github.com/receyuki/comfyui-prompt-reader-node)
+* [cg-use-everywhere](https://github.com/chrisgoringe/cg-use-everywhere)
+* [efficiency-nodes-comfyui](https://github.com/jags111/efficiency-nodes-comfyui)
+* [rgthree-comfy](https://github.com/rgthree/rgthree-comfy)
+
+---
+
+💬 Feedback & Issues → [GitHub Issues](https://github.com/somb1/ComfyUI-Docker-RP/issues)
+
+---
