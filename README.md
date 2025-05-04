@@ -37,9 +37,9 @@ To change images: Go to **Edit Pod/Template** → Set `Container Image`.
 
 | Variable                 | Description                                                                                 | Default   |
 | ------------------------ | ------------------------------------------------------------------------------------------- | --------- |
-| `JUPYTERLAB_PASSWORD`    | Password for JupyterLab (optional)                                                          | (unset)   |
+| `JUPYTERLAB_PASSWORD`    | Password for JupyterLab                                                         | (unset)   |
 | `TIME_ZONE`              | Timezone (e.g., `Asia/Seoul`)                                                               | `Etc/UTC` |
-| `COMFYUI_EXTRA_ARGS`     | Extra ComfyUI options (e.g., `--fast`)                                                      | (unset)   |
+| `COMFYUI_EXTRA_ARGS`     | Extra ComfyUI options                                                      | `--fast`   |
 | `INSTALL_SAGEATTENTION2` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) at start (`True`/`False`) | `False`   |
 
 > ⚠️ SageAttention2 requires Ampere or newer GPUs and takes \~5 min to install.
