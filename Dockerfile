@@ -101,8 +101,8 @@ RUN case "$PREINSTALLED_MODEL" in \
             ;; \
         WAN21) \
             wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors -P /preinstalled_models/clip_vision && \
-            wget --no-verbose https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/umt5-xxl-enc-bf16.safetensors -P /preinstalled_models/text_encoders && \
-            wget --no-verbose https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_bf16.safetensors -P /preinstalled_models/vae \
+            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors?download=true -P /preinstalled_models/text_encoders && \
+            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors -P /preinstalled_models/vae \
             ;; \
     esac
 
