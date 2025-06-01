@@ -91,16 +91,20 @@ RUN cd /ComfyUI/custom_nodes && \
     find /ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 
 # Ensure some directories are created in advance
-RUN mkdir -p /preinstalled_models/{checkpoints,upscale_models} /workspace/{ComfyUI,logs,venv} 
+RUN mkdir -p /preinstalled_models/{checkpoints,upscale_models,clip_vision,text_encoders,vae} /workspace/{ComfyUI,logs,venv} 
 
 # Check the value of PREINSTALLED_MODEL and download the corresponding file
 RUN case "$PREINSTALLED_MODEL" in \
         NTRMIX40) \
-            wget --no-verbose https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /preinstalled_models/checkpoints ;; \
-    esac && \
-    if [ -n "$PREINSTALLED_MODEL" ]; then \
-        wget --no-verbose https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /preinstalled_models/upscale_models; \
-    fi
+            wget --no-verbose https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /preinstalled_models/checkpoints && \
+            wget --no-verbose https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /preinstalled_models/upscale_models \
+            ;; \
+        WAN21) \
+            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors -P /preinstalled_models/clip_vision && \
+            wget --no-verbose https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/umt5-xxl-enc-bf16.safetensors -P /preinstalled_models/text_encoders && \
+            wget --no-verbose https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_bf16.safetensors -P /preinstalled_models/vae \
+            ;; \
+    esac
 
 # NGINX Proxy Configuration
 COPY proxy/nginx.conf /etc/nginx/nginx.conf

@@ -57,6 +57,12 @@ target "_ntrmix40" {
     }
 }
 
+target "_wan21" {
+    args = {
+        PREINSTALLED_MODEL = "WAN21"
+    }
+}
+
 target "base-12-4" {
     inherits = ["_cu124"]
     tags = tag("base", "cu124")
@@ -85,4 +91,19 @@ target "ntrmix40-12-6" {
 target "ntrmix40-12-8" {
     inherits = ["_cu128", "_ntrmix40"]
     tags = tag("ntrmix40", "cu128")
+}
+
+target "wan21-12-4" {
+    inherits = ["_cu124", "_wan21"]
+    tags = tag("wan21", "cu124")
+}
+
+target "wan21-12-6" {
+    inherits = ["_cu126", "_wan21"]
+    tags = tag("wan21", "cu126")
+}
+
+target "wan21-12-8" {
+    inherits = ["_cu128", "_wan21"]
+    tags = tag("wan21", "cu128")
 }
