@@ -112,7 +112,7 @@ COPY --chmod=755 pre_start.sh /
 COPY --chmod=755 post_start.sh /
 
 # Welcome Message
-COPY --from=logo runpod.txt /etc/runpod.txt
+COPY logo/runpod.txt /etc/runpod.txt
 RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
 RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
 
