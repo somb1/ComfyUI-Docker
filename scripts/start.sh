@@ -100,15 +100,9 @@ start_jupyter() {
 
 # Start code-server
 start_code_server() {
-    CODE_SERVER_PASSWORD="${CODE_SERVER_PASSWORD:-}"
-    CODE_SERVER_PORT="${CODE_SERVER_PORT:-8080}"
-
-    echo "Starting code-server on port ${CODE_SERVER_PORT}..."
+    echo "Starting code-server..."
     mkdir -p /workspace/logs
-    nohup code-server --bind-addr 0.0.0.0:${CODE_SERVER_PORT} \
-        --auth password \
-        --password "${CODE_SERVER_PASSWORD}" \
-        /workspace &> /workspace/logs/code-server.log &
+    nohup code-server --bind-addr 0.0.0.0:8080  &> /workspace/logs/code-server.log &
     echo "code-server started"
 }
 
