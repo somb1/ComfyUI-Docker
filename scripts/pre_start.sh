@@ -42,8 +42,8 @@ fi
 
 echo "**** syncing ComfyUI to workspace, please wait ****"
 rsync -au --remove-source-files /ComfyUI/ /workspace/ComfyUI/ && rm -rf /ComfyUI
-ln -sf /preinstalled_models/checkpoints/* /workspace/ComfyUI/models/checkpoints/
-ln -sf /preinstalled_models/upscale_models/* /workspace/ComfyUI/models/upscale_models/
-ln -sf /preinstalled_models/clip_vision/* /workspace/ComfyUI/models/clip_vision/
-ln -sf /preinstalled_models/text_encoders/* /workspace/ComfyUI/models/text_encoders/
-ln -sf /preinstalled_models/vae/* /workspace/ComfyUI/models/vae/
+#ln -sf /preinstalled_models/checkpoints/* /workspace/ComfyUI/models/checkpoints/
+#ln -sf /preinstalled_models/upscale_models/* /workspace/ComfyUI/models/upscale_models/
+#ln -sf /preinstalled_models/clip_vision/* /workspace/ComfyUI/models/clip_vision/
+#ln -sf /preinstalled_models/text_encoders/* /workspace/ComfyUI/models/text_encoders/
+#ln -sf /preinstalled_models/vae/* /workspace/ComfyUI/models/vae/

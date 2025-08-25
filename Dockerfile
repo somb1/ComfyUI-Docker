@@ -9,7 +9,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG PYTHON_VERSION
 ARG TORCH_VERSION
 ARG CUDA_VERSION
-ARG PREINSTALLED_MODEL
 
 # Set basic environment variables
 ENV SHELL=/bin/bash 
@@ -66,45 +65,58 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd custom_nodes/ComfyUI-Manager && \
     pip install --no-cache-dir -r requirements.txt
 
+COPY custom_nodes.txt /tmp/custom_nodes.txt
+
 RUN cd /ComfyUI/custom_nodes && \
-    git clone --recursive https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git && \
-    git clone --recursive https://github.com/receyuki/comfyui-prompt-reader-node.git && \
-    git clone https://github.com/comfyanonymous/ComfyUI_TensorRT.git && \
-    git clone https://github.com/cubiq/ComfyUI_essentials.git && \
-    git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
-    git clone https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git && \
-    git clone https://github.com/jags111/efficiency-nodes-comfyui.git && \
-    git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
-    git clone https://github.com/JPS-GER/ComfyUI_JPS-Nodes.git && \
-    git clone https://github.com/chrisgoringe/cg-use-everywhere.git && \
-    git clone https://github.com/crystian/ComfyUI-Crystools.git && \
-    git clone https://github.com/rgthree/rgthree-comfy.git && \
-    git clone https://github.com/alexopus/ComfyUI-Image-Saver.git && \
-    git clone https://github.com/kijai/ComfyUI-WanVideoWrapper.git && \
-    git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
-    git clone https://github.com/city96/ComfyUI-GGUF.git && \
-    git clone https://github.com/kijai/ComfyUI-KJNodes && \
-    git clone https://github.com/Flow-two/ComfyUI-WanStartEndFramesNative.git && \
-    git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git && \
-    git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git && \
+    xargs -n 1 git clone --recursive < /tmp/custom_nodes.txt && \
     find /ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
     find /ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 
+#RUN cd /ComfyUI/custom_nodes && \
+#    git clone --recursive https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git && \
+#    git clone --recursive https://github.com/receyuki/comfyui-prompt-reader-node.git && \
+#    git clone https://github.com/comfyanonymous/ComfyUI_TensorRT.git && \
+#    git clone https://github.com/cubiq/ComfyUI_essentials.git && \
+#    git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
+#    git clone https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git && \
+#    git clone https://github.com/jags111/efficiency-nodes-comfyui.git && \
+#    git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
+#    git clone https://github.com/JPS-GER/ComfyUI_JPS-Nodes.git && \
+#    git clone https://github.com/chrisgoringe/cg-use-everywhere.git && \
+#    git clone https://github.com/crystian/ComfyUI-Crystools.git && \
+#    git clone https://github.com/rgthree/rgthree-comfy.git && \
+#    git clone https://github.com/alexopus/ComfyUI-Image-Saver.git && \
+#    git clone https://github.com/kijai/ComfyUI-WanVideoWrapper.git && \
+#    git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
+#    git clone https://github.com/city96/ComfyUI-GGUF.git && \
+#    git clone https://github.com/kijai/ComfyUI-KJNodes && \
+#    git clone https://github.com/Flow-two/ComfyUI-WanStartEndFramesNative.git && \
+#    git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git && \
+#    git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git && \
+#    find /ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
+#    find /ComfyUI/custom_nodes -name "install.py" -exec python {} \;
+
 # Ensure some directories are created in advance
-RUN mkdir -p /preinstalled_models/{checkpoints,upscale_models,clip_vision,text_encoders,vae} /workspace/{ComfyUI,logs,venv} 
+RUN mkdir -p /workspace/{ComfyUI,logs,venv}
 
 # Check the value of PREINSTALLED_MODEL and download the corresponding file
-RUN case "$PREINSTALLED_MODEL" in \
-        NTRMIX40) \
-            wget --no-verbose https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /preinstalled_models/checkpoints && \
-            wget --no-verbose https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /preinstalled_models/upscale_models \
-            ;; \
-        WAN21) \
-            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors -P /preinstalled_models/clip_vision && \
-            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors -P /preinstalled_models/text_encoders && \
-            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors -P /preinstalled_models/vae \
-            ;; \
-    esac
+#RUN mkdir -p /preinstalled_models/{checkpoints,upscale_models,clip_vision,text_encoders,vae} 
+#RUN case "$PREINSTALLED_MODEL" in \
+#        NTRMIX40) \
+#            wget --no-verbose https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /preinstalled_models/checkpoints && \
+#            wget --no-verbose https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /preinstalled_models/upscale_models \
+#            ;; \
+#        WAN21) \
+#            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors -P /preinstalled_models/clip_vision && \
+#            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors -P /preinstalled_models/text_encoders && \
+#            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors -P /preinstalled_models/vae \
+#            ;; \
+#    esac
+
+# Install code-server
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+
+EXPOSE 22 3000 8080 8888
 
 # NGINX Proxy Configuration
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
@@ -118,9 +130,9 @@ COPY scripts/post_start.sh /
 RUN chmod +x /start.sh /pre_start.sh /post_start.sh
 
 # Welcome Message displayed upon login
-COPY logo/runpod.txt /etc/runpod.txt
-RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
-RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
+#COPY logo/runpod.txt /etc/runpod.txt
+#RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
+#RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
 
 # Set entrypoint to the start script
 CMD ["/start.sh"]

@@ -98,6 +98,20 @@ start_jupyter() {
     echo "JupyterLab started"
 }
 
+# Start code-server
+start_code_server() {
+    CODE_SERVER_PASSWORD="${CODE_SERVER_PASSWORD:-}"
+    CODE_SERVER_PORT="${CODE_SERVER_PORT:-8080}"
+
+    echo "Starting code-server on port ${CODE_SERVER_PORT}..."
+    mkdir -p /workspace/logs
+    nohup code-server --bind-addr 0.0.0.0:${CODE_SERVER_PORT} \
+        --auth password \
+        --password "${CODE_SERVER_PASSWORD}" \
+        /workspace &> /workspace/logs/code-server.log &
+    echo "code-server started"
+}
+
 # ---------------------------------------------------------------------------- #
 #                               Main Program                                   #
 # ---------------------------------------------------------------------------- #
@@ -110,6 +124,7 @@ echo "Pod Started"
 
 setup_ssh
 start_jupyter
+start_code_server
 export_env_vars
 
 execute_script "/post_start.sh" "Running post-start script..."
