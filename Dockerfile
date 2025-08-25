@@ -94,9 +94,15 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 EXPOSE 22 3000 8080 8888
 
-# NGINX Proxy Configuration
+# NGINX Proxy
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
+COPY proxy/snippets /etc/nginx/snippets
 COPY proxy/readme.html /usr/share/nginx/html/readme.html
+
+# Remove existing SSH host keys
+RUN rm -f /etc/ssh/ssh_host_*
+
+# Copy the README.md
 COPY README.md /usr/share/nginx/html/README.md
 
 # Copy and set execution permissions for start scripts
