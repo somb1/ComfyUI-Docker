@@ -18,3 +18,4 @@ https://github.com/kijai/ComfyUI-KJNodes.git
 https://github.com/Flow-two/ComfyUI-WanStartEndFramesNative.git
 https://github.com/Smirnov75/ComfyUI-mxToolkit.git
 https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git
+https://github.com/pollockjj/ComfyUI-MultiGPU

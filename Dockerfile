@@ -72,30 +72,6 @@ RUN cd /ComfyUI/custom_nodes && \
     find /ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
     find /ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 
-#RUN cd /ComfyUI/custom_nodes && \
-#    git clone --recursive https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git && \
-#    git clone --recursive https://github.com/receyuki/comfyui-prompt-reader-node.git && \
-#    git clone https://github.com/comfyanonymous/ComfyUI_TensorRT.git && \
-#    git clone https://github.com/cubiq/ComfyUI_essentials.git && \
-#    git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
-#    git clone https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git && \
-#    git clone https://github.com/jags111/efficiency-nodes-comfyui.git && \
-#    git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
-#    git clone https://github.com/JPS-GER/ComfyUI_JPS-Nodes.git && \
-#    git clone https://github.com/chrisgoringe/cg-use-everywhere.git && \
-#    git clone https://github.com/crystian/ComfyUI-Crystools.git && \
-#    git clone https://github.com/rgthree/rgthree-comfy.git && \
-#    git clone https://github.com/alexopus/ComfyUI-Image-Saver.git && \
-#    git clone https://github.com/kijai/ComfyUI-WanVideoWrapper.git && \
-#    git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
-#    git clone https://github.com/city96/ComfyUI-GGUF.git && \
-#    git clone https://github.com/kijai/ComfyUI-KJNodes && \
-#    git clone https://github.com/Flow-two/ComfyUI-WanStartEndFramesNative.git && \
-#    git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git && \
-#    git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git && \
-#    find /ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
-#    find /ComfyUI/custom_nodes -name "install.py" -exec python {} \;
-
 # Ensure some directories are created in advance
 RUN mkdir -p /workspace/{ComfyUI,logs,venv}
 
