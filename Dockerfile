@@ -107,9 +107,9 @@ RUN rm -f /etc/ssh/ssh_host_*
 COPY README.md /usr/share/nginx/html/README.md
 
 # Start Scripts
-COPY --chmod=755 start.sh /
-COPY --chmod=755 pre_start.sh /
-COPY --chmod=755 post_start.sh /
+COPY --chmod=755 scripts/start.sh /
+COPY --chmod=755 scripts/pre_start.sh /
+COPY --chmod=755 scripts/post_start.sh /
 
 # Welcome Message
 COPY logo/runpod.txt /etc/runpod.txt
