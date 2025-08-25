@@ -14,25 +14,40 @@ ARG CUDA_VERSION
 ENV SHELL=/bin/bash 
 ENV PYTHONUNBUFFERED=True 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=Etc/UTC
+
+# Set the default workspace directory
+ENV RP_WORKSPACE=/workspace
 
 # Override the default huggingface cache directory.
-ENV HF_HOME="/runpod-volume/.cache/huggingface/"
+ENV HF_HOME="${RP_WORKSPACE}/.cache/huggingface/"
 
 # Faster transfer of models from the hub to the container
-ENV HF_HUB_ENABLE_HF_TRANSFER="1"
+ENV HF_HUB_ENABLE_HF_TRANSFER=1
+ENV HF_XET_HIGH_PERFORMANCE=1
 
 # Shared python package cache
-ENV PIP_CACHE_DIR="/runpod-volume/.cache/pip/"
-ENV UV_CACHE_DIR="/runpod-volume/.cache/uv/"
+ENV VIRTUALENV_OVERRIDE_APP_DATA="${RP_WORKSPACE}/.cache/virtualenv/"
+ENV PIP_CACHE_DIR="${RP_WORKSPACE}/.cache/pip/"
+ENV UV_CACHE_DIR="${RP_WORKSPACE}/.cache/uv/"
+
+# modern pip workarounds
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
+ENV PIP_ROOT_USER_ACTION=ignore
+
+# Set TZ and Locale
+ENV TZ=Etc/UTC
 
 # Set working directory
 WORKDIR /
 
-# Install essential packages (optimized to run in one command)
+# Update and upgrade
 RUN apt-get update --yes && \
-    apt-get upgrade --yes && \
-    apt-get install --yes --no-install-recommends \
+    apt-get upgrade --yes
+
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+
+# Install essential packages
+RUN apt-get install --yes --no-install-recommends \
         git wget curl bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential nvtop \
         libgl1 libglib2.0-0 clang libomp-dev ninja-build \
         openssh-server ca-certificates && \
@@ -75,20 +90,6 @@ RUN cd /ComfyUI/custom_nodes && \
 # Ensure some directories are created in advance
 RUN mkdir -p /workspace/{ComfyUI,logs,venv}
 
-# Check the value of PREINSTALLED_MODEL and download the corresponding file
-#RUN mkdir -p /preinstalled_models/{checkpoints,upscale_models,clip_vision,text_encoders,vae} 
-#RUN case "$PREINSTALLED_MODEL" in \
-#        NTRMIX40) \
-#            wget --no-verbose https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /preinstalled_models/checkpoints && \
-#            wget --no-verbose https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /preinstalled_models/upscale_models \
-#            ;; \
-#        WAN21) \
-#            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors -P /preinstalled_models/clip_vision && \
-#            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors -P /preinstalled_models/text_encoders && \
-#            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors -P /preinstalled_models/vae \
-#            ;; \
-#    esac
-
 # Install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
@@ -105,16 +106,15 @@ RUN rm -f /etc/ssh/ssh_host_*
 # Copy the README.md
 COPY README.md /usr/share/nginx/html/README.md
 
-# Copy and set execution permissions for start scripts
-COPY scripts/start.sh /
-COPY scripts/pre_start.sh /
-COPY scripts/post_start.sh /
-RUN chmod +x /start.sh /pre_start.sh /post_start.sh
+# Start Scripts
+COPY --chmod=755 start.sh /
+COPY --chmod=755 pre_start.sh /
+COPY --chmod=755 post_start.sh /
 
-# Welcome Message displayed upon login
-#COPY logo/runpod.txt /etc/runpod.txt
-#RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
-#RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
+# Welcome Message
+COPY --from=logo runpod.txt /etc/runpod.txt
+RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
+RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
 
 # Set entrypoint to the start script
 CMD ["/start.sh"]
