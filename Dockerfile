@@ -9,6 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG PYTHON_VERSION
 ARG TORCH_VERSION
 ARG CUDA_VERSION
+ARG PRESET_DOWNLOAD
 
 # Set basic environment variables
 ENV SHELL=/bin/bash 
@@ -90,10 +91,7 @@ RUN cd /ComfyUI/custom_nodes && \
 # Ensure some directories are created in advance
 RUN mkdir -p /workspace/{ComfyUI,logs,venv}
 
-# Install code-server
-RUN curl -fsSL https://code-server.dev/install.sh | sh
-
-EXPOSE 22 3000 8080 8888
+EXPOSE 22 3000 8888
 
 # NGINX Proxy
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
