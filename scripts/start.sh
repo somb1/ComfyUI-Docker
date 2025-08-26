@@ -73,14 +73,14 @@ export_env_vars() {
 # Start jupyter
 start_jupyter() {
     # Default to not using a password
-    JUPYTER_PASSWORD=""
+    JUPYTERLAB_PASSWORD=""
 
-    # Allow a password to be set by providing the JUPYTER_PASSWORD environment variable
-    if [[ ${JUPYTERLAB_PASSWORD} ]]; then
+    # Allow a password to be set by providing the ACCESS_PASSWORD environment variable
+    if [[ ${ACCESS_PASSWORD} ]]; then
         echo "Starting JupyterLab with the provided password..."
-        JUPYTER_PASSWORD=${JUPYTERLAB_PASSWORD}
+        JUPYTERLAB_PASSWORD=${ACCESS_PASSWORD}
     else
-        echo "Starting JupyterLab without a password... (JUPYTERLAB_PASSWORD environment variable is not set.)"
+        echo "Starting JupyterLab without a password... (ACCESS_PASSWORD environment variable is not set.)"
     fi
     
     mkdir -p /workspace/logs
@@ -92,11 +92,33 @@ start_jupyter() {
         --FileContentsManager.delete_to_trash=False \
         --ContentsManager.allow_hidden=True \
         --ServerApp.terminado_settings='{"shell_command":["/bin/bash"]}' \
-        --ServerApp.token=${JUPYTER_PASSWORD} \
+        --ServerApp.token="${JUPYTERLAB_PASSWORD}" \
         --ServerApp.allow_origin=* \
         --ServerApp.preferred_dir=/workspace &> /workspace/logs/jupyterlab.log &
     echo "JupyterLab started"
 }
+
+# Start code-server
+start_code_server() {
+    echo "Starting code-server..."
+    mkdir -p /workspace/logs
+
+    if [[ -n "${ACCESS_PASSWORD}" ]]; then
+        echo "Using ACCESS_PASSWORD as the login password"
+        nohup code-server --bind-addr 0.0.0.0:8080 \
+            --auth password \
+            --password "${ACCESS_PASSWORD}" \
+            &> /workspace/logs/code-server.log &
+    else
+        echo "Starting without authentication (ACCESS_PASSWORD not set)"
+        nohup code-server --bind-addr 0.0.0.0:8080 \
+            --auth none \
+            &> /workspace/logs/code-server.log &
+    fi
+
+    echo "code-server started"
+}
+
 
 # ---------------------------------------------------------------------------- #
 #                               Main Program                                   #
@@ -110,6 +132,7 @@ echo "Pod Started"
 
 setup_ssh
 start_jupyter
+start_code_server
 export_env_vars
 
 execute_script "/post_start.sh" "Running post-start script..."
