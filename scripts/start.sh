@@ -103,14 +103,19 @@ start_code_server() {
     echo "Starting code-server..."
     mkdir -p /workspace/logs
 
+    # Default to not using a password
+    CODE_SERVER_PASSWORD=""
+
+    # Allow a password to be set by providing the ACCESS_PASSWORD environment variable
     if [[ -n "${ACCESS_PASSWORD}" ]]; then
-        echo "Using ACCESS_PASSWORD as the login password"
+        echo "Starting code-server with the provided password..."
+        CODE_SERVER_PASSWORD=${ACCESS_PASSWORD}
         nohup code-server --bind-addr 0.0.0.0:8080 \
             --auth password \
-            --password "${ACCESS_PASSWORD}" \
+            --password "${CODE_SERVER_PASSWORD}" \
             &> /workspace/logs/code-server.log &
     else
-        echo "Starting without authentication (ACCESS_PASSWORD not set)"
+        echo "Starting code-server without a password... (ACCESS_PASSWORD environment variable is not set.)"
         nohup code-server --bind-addr 0.0.0.0:8080 \
             --auth none \
             &> /workspace/logs/code-server.log &
@@ -118,7 +123,6 @@ start_code_server() {
 
     echo "code-server started"
 }
-
 
 # ---------------------------------------------------------------------------- #
 #                               Main Program                                   #
