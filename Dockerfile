@@ -48,7 +48,7 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
 # Install essential packages
 RUN apt-get install --yes --no-install-recommends \
-        git wget curl bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential nvtop \
+        git wget curl bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential cmake nvtop \
         libgl1 libglib2.0-0 clang libomp-dev ninja-build \
         openssh-server ca-certificates && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
