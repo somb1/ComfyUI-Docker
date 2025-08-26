@@ -101,9 +101,10 @@ RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
 RUN mkdir -p /workspace/{ComfyUI,logs,venv}
 
 # Install code-server
-RUN curl -fsSL https://code-server.dev/install.sh | sh
+#RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-EXPOSE 22 3000 8080 8888
+#EXPOSE 22 3000 8080 8888
+EXPOSE 22 3000 8888
 
 # NGINX Proxy
 COPY proxy/nginx.conf /etc/nginx/nginx.conf

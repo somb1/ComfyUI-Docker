@@ -136,7 +136,7 @@ echo "Pod Started"
 
 setup_ssh
 start_jupyter
-start_code_server
+#start_code_server
 export_env_vars
 
 execute_script "/post_start.sh" "Running post-start script..."
