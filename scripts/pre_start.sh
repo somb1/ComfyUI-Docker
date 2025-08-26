@@ -31,17 +31,17 @@ done
 echo "**** syncing ComfyUI to workspace, please wait ****"
 rsync -au --remove-source-files /ComfyUI/ /workspace/ComfyUI/ && rm -rf /ComfyUI
 
-if [ "${INSTALL_SAGEATTENTION2,,}" = "true" ]; then
-    if pip show sageattention > /dev/null 2>&1; then
-        echo "**** SageAttention2 is already installed. Skipping installation. ****"
-    else
-        echo "**** SageAttention2 is not installed. Installing, please wait.... (This may take a long time, approximately 5+ minutes.) ****"
-        git clone https://github.com/thu-ml/SageAttention.git /SageAttention
-        cd /SageAttention
-        python setup.py install
-        echo "**** SageAttention2 installation completed. ****"
-    fi
-fi
+#if [ "${INSTALL_SAGEATTENTION2,,}" = "true" ]; then
+#    if pip show sageattention > /dev/null 2>&1; then
+#        echo "**** SageAttention2 is already installed. Skipping installation. ****"
+#    else
+#        echo "**** SageAttention2 is not installed. Installing, please wait.... (This may take a long time, approximately 5+ minutes.) ****"
+#        git clone https://github.com/thu-ml/SageAttention.git /SageAttention
+#        cd /SageAttention
+#        python setup.py install
+#        echo "**** SageAttention2 installation completed. ****"
+#    fi
+#fi
 
 download_if_missing() {
     local url="$1"
