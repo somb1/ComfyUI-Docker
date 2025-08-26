@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [base]
+        target: [base, slim]
         cuda: [12-4, 12-5, 12-6, 12-8, 12-9, 13-0]
     steps:
       - name: Maximize build space

@@ -9,6 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG PYTHON_VERSION
 ARG TORCH_VERSION
 ARG CUDA_VERSION
+ARG SKIP_CUSTOM_NODES
 
 # Set basic environment variables
 ENV SHELL=/bin/bash 
