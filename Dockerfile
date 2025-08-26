@@ -92,12 +92,6 @@ RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
         echo "Skipping custom nodes installation because SKIP_CUSTOM_NODES is set"; \
     fi
 
-    
-RUN cd /ComfyUI/custom_nodes && \
-    xargs -n 1 git clone --recursive < /tmp/custom_nodes.txt && \
-    find /ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
-    find /ComfyUI/custom_nodes -name "install.py" -exec python {} \;
-
 # Ensure some directories are created in advance
 RUN mkdir -p /workspace/{ComfyUI,logs,venv}
 
