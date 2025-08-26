@@ -75,10 +75,8 @@ RUN pip install --no-cache-dir -U \
 
 # Download and install the SageAttention wheel dynamically based on CUDA_VERSION
 RUN WHEEL_URL="https://github.com/somb1/SageAttention/releases/download/v2.2.0/sageattention-2.2.0+${CUDA_VERSION}torch${TORCH_VERSION}-cp313-cp313-linux_x86_64.whl" && \
-    echo "Downloading SageAttention wheel from: $WHEEL_URL" && \
-    wget -O /tmp/sageattention.whl "$WHEEL_URL" && \
-    pip install --no-cache-dir /tmp/sageattention.whl && \
-    rm /tmp/sageattention.whl
+    echo "Installing SageAttention wheel from: $WHEEL_URL" && \
+    pip install --no-cache-dir "$WHEEL_URL"
 
 # Install ComfyUI and ComfyUI Manager
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
