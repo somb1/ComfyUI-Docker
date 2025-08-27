@@ -166,6 +166,7 @@ for preset in "${PRESETS[@]}"; do
 
         # Lightning LoRA
         WAN22_LIGHTNING_LORA)
+            echo "Preset: WAN22_LIGHTNING_LORA"
             download_if_missing "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan21_CausVid_14B_T2V_lora_rank32.safetensors" "/workspace/ComfyUI/models/loras"
             download_if_missing "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank32_bf16.safetensors" "/workspace/ComfyUI/models/loras"
             download_if_missing "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors" "/workspace/ComfyUI/models/loras"
