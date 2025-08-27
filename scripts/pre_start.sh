@@ -174,6 +174,12 @@ for preset in "${PRESETS[@]}"; do
             download_if_missing "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan22-Lightning/Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors" "/workspace/ComfyUI/models/loras"
             ;;
 
+        # nsfw LoRA
+        WAN22_NSFW_LORA)
+            echo "Preset: WAN22_NSFW_LORA"
+            download_if_missing "https://huggingface.co/3dn3lt/Wan2.2-nsfw-0.08a/resolve/main/NSFW-22-H-e8.safetensors" "/workspace/ComfyUI/models/loras"
+            ;;
+
         *)
             eecho "No matching preset for '${preset}', skipping."
             ;;
