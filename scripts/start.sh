@@ -73,12 +73,12 @@ export_env_vars() {
 # Start jupyter
 start_jupyter() {
     # Default to not using a password
-    JUPYTERLAB_PASSWORD=""
+    JUPYTER_PASSWORD=""
 
     # Allow a password to be set by providing the ACCESS_PASSWORD environment variable
     if [[ ${ACCESS_PASSWORD} ]]; then
         echo "Starting JupyterLab with the provided password..."
-        JUPYTERLAB_PASSWORD=${ACCESS_PASSWORD}
+        JUPYTER_PASSWORD=${ACCESS_PASSWORD}
     else
         echo "Starting JupyterLab without a password... (ACCESS_PASSWORD environment variable is not set.)"
     fi
@@ -92,7 +92,7 @@ start_jupyter() {
         --FileContentsManager.delete_to_trash=False \
         --ContentsManager.allow_hidden=True \
         --ServerApp.terminado_settings='{"shell_command":["/bin/bash"]}' \
-        --ServerApp.token="${JUPYTERLAB_PASSWORD}" \
+        --ServerApp.token="${JUPYTER_PASSWORD}" \
         --ServerApp.allow_origin=* \
         --ServerApp.preferred_dir=/workspace &> /workspace/logs/jupyterlab.log &
     echo "JupyterLab started"

@@ -10,7 +10,12 @@ sudo ln -sf "/usr/share/zoneinfo/$TZ" /etc/localtime
 sudo dpkg-reconfigure -f noninteractive tzdata
 
 echo "**** syncing venv to workspace, please wait. This could take a while on first startup! ****"
-rsync -au --remove-source-files /venv/ /workspace/venv/ && rm -rf /venv
+if [ -d /venv ]; then
+    rsync -au --remove-source-files /venv/ /workspace/venv/ && rm -rf /venv
+else
+    echo "Skip: /venv does not exist."
+fi
+
 # Updating '/venv' to '/workspace/venv' in all text files under '/workspace/venv/bin'
 find "/workspace/venv/bin" -type f | while read -r file; do
     if file "$file" | grep -q "text"; then
@@ -29,7 +34,11 @@ find "/workspace/venv/bin" -type f | while read -r file; do
 done
 
 echo "**** syncing ComfyUI to workspace, please wait ****"
-rsync -au --remove-source-files /ComfyUI/ /workspace/ComfyUI/ && rm -rf /ComfyUI
+if [ -d /ComfyUI ]; then
+    rsync -au --remove-source-files /ComfyUI/ /workspace/ComfyUI/ && rm -rf /ComfyUI
+else
+    echo "Skip: /ComfyUI does not exist."
+fi
 
 if [ "${INSTALL_SAGEATTENTION2,,}" = "true" ]; then
     if pip show sageattention > /dev/null 2>&1; then
