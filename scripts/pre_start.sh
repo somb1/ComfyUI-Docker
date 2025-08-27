@@ -175,3 +175,4 @@ for preset in "${PRESETS[@]}"; do
             echo "No matching preset for '${preset}', skipping."
             ;;
     esac
+done
