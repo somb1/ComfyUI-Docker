@@ -1,6 +1,9 @@
 https://github.com/kijai/ComfyUI-KJNodes.git
 https://github.com/kijai/ComfyUI-WanVideoWrapper
 https://github.com/city96/ComfyUI-GGUF.git
+https://github.com/yolain/ComfyUI-Easy-Use
+https://github.com/Fannovel16/ComfyUI-Frame-Interpolation
+https://github.com/Smirnov75/ComfyUI-mxToolkit
 https://github.com/pollockjj/ComfyUI-MultiGPU
 https://github.com/comfyanonymous/ComfyUI_TensorRT.git
 https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git
