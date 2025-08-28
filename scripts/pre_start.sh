@@ -52,4 +52,4 @@ if [ "${INSTALL_SAGEATTENTION,,}" = "true" ]; then
     fi
 fi
 
-/download_preset.sh "${PRESET_DOWNLOAD}"
+/download_presets.sh "${PRESET_DOWNLOAD}"
