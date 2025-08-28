@@ -31,8 +31,13 @@ echo "**** Checking presets and downloading corresponding files ****"
 
 for preset in "${PRESETS[@]}"; do
     case "${preset}" in
-        NTRMIX40)
-            echo "Preset: NTRMIX40"
+        WAINSFW_V140)
+            echo "Preset: WAINSFW_V140"
+            download_if_missing "https://huggingface.co/Ine007/waiNSFWIllustrious_v140/resolve/main/waiNSFWIllustrious_v140.safetensors" "/workspace/ComfyUI/models/checkpoints"
+            download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"
+            ;;
+        NTRMIX_V40)
+            echo "Preset: NTRMIX_V40"
             download_if_missing "https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors" "/workspace/ComfyUI/models/checkpoints"
             download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"
             ;;

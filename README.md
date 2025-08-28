@@ -54,7 +54,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 | `TIME_ZONE`             | [Timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g., `Asia/Seoul`)   | `Etc/UTC` |
 | `COMFYUI_EXTRA_ARGS`    | Extra ComfyUI options (e.g. `--fast`)                        | (unset)   |
 | `INSTALL_SAGEATTENTION` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) on start (`True`/`False`) | `True`    |
-| `PRESET_DOWNLOAD`       | Download model presets at startup (comma-separated list) (e.g. `NTRMIX40`)                  | (unset)   |
+| `PRESET_DOWNLOAD`       | Download model presets at startup (comma-separated list) (e.g. `WAINSFW_V140`)                  | (unset)   |
 
 > To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
 
@@ -65,7 +65,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 ## 🔧 Preset Downloads
 
 > `PRESET_DOWNLOAD` accepts either a **single preset** or **multiple presets** separated by commas.\
-> (e.g. `NTRMIX40` or `WAN22_I2V_A14B_GGUF_Q8_0,WAN22_LIGHTNING_LORA,WAN22_NSFW_LORA`) \
+> (e.g. `WAINSFW_V140` or `WAN22_I2V_A14B_GGUF_Q8_0,WAN22_LIGHTNING_LORA,WAN22_NSFW_LORA`) \
 > When set, the container will automatically download the corresponding models on startup.
 
 > You can also manually run the preset download script **inside JupyterLab or code-server**:
@@ -73,7 +73,8 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 
 ### Available Presets
 
-* `NTRMIX40`
+* `WAINSFW_V140`
+* `NTRMIX_V40`
 * `WAN22_TI2V_5B`
 * `WAN22_T2V_A14B`
 * `WAN22_I2V_A14B`
