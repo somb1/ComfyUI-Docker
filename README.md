@@ -2,12 +2,12 @@
 
 ### 🔌 **Exposed Ports**
 
-| Port | Type | Purpose                                              |
-| ---- | ---- | ---------------------------------------------------- |
-| 22   | TCP  | SSH                                                  |
-| 3000 | HTTP | [ComfyUI] |
-| 8080 | HTTP | [code-server]  |
-| 8888 | HTTP | [JupyterLab]                  |
+| Port | Type | Purpose     |
+| ---- | ---- | ----------- |
+| 22   | TCP  | SSH         |
+| 3000 | HTTP | ComfyUI     |
+| 8080 | HTTP | code-server |
+| 8888 | HTTP | JupyterLab  |
 
 ---
 
@@ -48,7 +48,7 @@ To change images: **Edit Pod/Template** → set `Container Image`.
 | `TIME_ZONE`             | [Timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g., `Asia/Seoul`) | `Etc/UTC` |
 | `COMFYUI_EXTRA_ARGS`    | Extra ComfyUI options (e.g. `--use-sage-attention`)                                           | (unset)   |
 | `INSTALL_SAGEATTENTION` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) at start (`True`/`False`)   | `True`    |
-| `PRESET_DOWNLOAD`       | Download predefined preset files on startup (e.g. `WAN22_I2V_A14B_GGUF_Q8_0`)                                                  | (unset)   |
+| `PRESET_DOWNLOAD`       | Download predefined preset files on startup (e.g. `WAN22_I2V_A14B_GGUF_Q8_0`)                 | (unset)   |
 
 > ⚠️ SageAttention2 requires Ampere or newer GPUs and takes \~5 min to install.
 
