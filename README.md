@@ -1,4 +1,5 @@
-> 🔄 **Auto-updated every 8 hours** to always include the latest version. \
+> 🔄 **Auto-updated every 8 hours** to always include the latest version.
+
 > 💬 Feedback & Issues → [GitHub Issues](https://github.com/somb1/ComfyUI-Docker/issues)
 
 ## 🔌 Exposed Ports
