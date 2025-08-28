@@ -125,6 +125,8 @@ COPY --chmod=755 scripts/start.sh /
 COPY --chmod=755 scripts/pre_start.sh /
 COPY --chmod=755 scripts/post_start.sh /
 
+COPY --chmod=755 scripts/download_presets.sh /
+
 # Welcome Message
 COPY logo/runpod.txt /etc/runpod.txt
 RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
