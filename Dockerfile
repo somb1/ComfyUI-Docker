@@ -100,6 +100,9 @@ RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
 # Ensure some directories are created in advance
 RUN mkdir -p /workspace/{ComfyUI,logs,venv}
 
+# Install Runpod CLI
+RUN wget -qO- cli.runpod.net | sudo bash
+
 # Install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
