@@ -54,9 +54,9 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 | `INSTALL_SAGEATTENTION` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) on start (`True`/`False`) | `True`    |
 | `PRESET_DOWNLOAD`       | Download model presets at startup (comma-separated list) (e.g. `NTRMIX40`)                  | (unset)   |
 
-> ⚠️ SageAttention2 requires **Ampere+ GPUs** and \~5 minutes to install.
-
 > To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
+
+> ⚠️ SageAttention2 requires **Ampere+ GPUs** and ~5 minutes to install.
 
 ---
 
@@ -112,23 +112,25 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 
 #### Custom Nodes
 
-* [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
-* [ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper)
-* [ComfyUI-GGUF](https://github.com/city96/ComfyUI-GGUF)
-* [ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
-* [ComfyUI-Frame-Interpolation](https://github.com/Fannovel16/ComfyUI-Frame-Interpolation)
-* [ComfyUI-mxToolkit](https://github.com/Smirnov75/ComfyUI-mxToolkit)
-* [ComfyUI-MultiGPU](https://github.com/pollockjj/ComfyUI-MultiGPU)
-* [ComfyUI\_TensorRT](https://github.com/comfyanonymous/ComfyUI_TensorRT)
-* [ComfyUI\_UltimateSDUpscale](https://github.com/ssitu/ComfyUI_UltimateSDUpscale)
-* [comfyui-prompt-reader-node](https://github.com/receyuki/comfyui-prompt-reader-node)
-* [ComfyUI\_essentials](https://github.com/cubiq/ComfyUI_essentials)
-* [ComfyUI-Impact-Pack](https://github.com/ltdrdata/ComfyUI-Impact-Pack)
-* [ComfyUI-Impact-Subpack](https://github.com/ltdrdata/ComfyUI-Impact-Subpack)
-* [efficiency-nodes-comfyui](https://github.com/jags111/efficiency-nodes-comfyui)
-* [ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts)
-* [ComfyUI\_JPS-Nodes](https://github.com/JPS-GER/ComfyUI_JPS-Nodes)
-* [cg-use-everywhere](https://github.com/chrisgoringe/cg-use-everywhere)
-* [ComfyUI-Crystools](https://github.com/crystian/ComfyUI-Crystools)
-* [rgthree-comfy](https://github.com/rgthree/rgthree-comfy)
-* [ComfyUI-Image-Saver](https://github.com/alexopus/ComfyUI-Image-Saver)
+* ComfyUI-KJNodes
+* ComfyUI-WanVideoWrapper
+* ComfyUI-GGUF
+* ComfyUI-Easy-Use
+* ComfyUI-Frame-Interpolation
+* ComfyUI-mxToolkit
+* ComfyUI-MultiGPU
+* ComfyUI_TensorRT
+* ComfyUI_UltimateSDUpscale
+* comfyui-prompt-reader-node
+* ComfyUI_essentials
+* ComfyUI-Impact-Pack
+* ComfyUI-Impact-Subpack
+* efficiency-nodes-comfyui
+* ComfyUI-Custom-Scripts
+* ComfyUI_JPS-Nodes
+* cg-use-everywhere
+* ComfyUI-Crystools
+* rgthree-comfy
+* ComfyUI-Image-Saver
+
+> 👉 More details in the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/Custom-Nodes).
