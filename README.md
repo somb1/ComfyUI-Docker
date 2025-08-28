@@ -1,8 +1,9 @@
-> 🔄 Updated every 8 hours to always stay on the latest version.
+> 🔄 **Auto-updated every 8 hours** to always include the latest version. \
+> 💬 Feedback & Issues → [GitHub Issues](https://github.com/somb1/ComfyUI-Docker/issues)
 
-### 🔌 **Exposed Ports**
+## 🔌 Exposed Ports
 
-| Port | Type | Purpose     |
+| Port | Type | Service     |
 | ---- | ---- | ----------- |
 | 22   | TCP  | SSH         |
 | 3000 | HTTP | ComfyUI     |
@@ -11,57 +12,63 @@
 
 ---
 
-### 🏷️ **Tag Structure**
+## 🏷️ Tag Format
 
-Base format: sombi/comfyui:`(A)`-torch2.8.0-`(B)`
+```text
+sombi/comfyui:(A)-torch2.8.0-(B)
+```
 
-* `(A)`: `base`, `slim`
-
+* **(A)**: `slim` or `base`
   * `slim`: ComfyUI + Manager only
-  * `base`: `slim` + pre-installed custom nodes
-* `(B)`: CUDA version (`12.4`, `12.5`, `12.6`, `12.8`) → (`cu124`, `cu125`, `cu126`, `cu128`)
+  * `base`: slim + pre-installed custom nodes
+* **(B)**: CUDA version → `cu124`, `cu125`, `cu126`, `cu128`
+
 
 ---
 
-### 🧱 **Image Matrix**
+## 🧱 Image Variants
 
 | Image Name                            | Custom Nodes | CUDA |
 | ------------------------------------- | ------------ | ---- |
-| `sombi/comfyui:base-torch2.8.0-cu124` | ✅            | 12.4 |
-| `sombi/comfyui:base-torch2.8.0-cu125` | ✅            | 12.5 |
-| `sombi/comfyui:base-torch2.8.0-cu126` | ✅            | 12.6 |
-| `sombi/comfyui:base-torch2.8.0-cu128` | ✅            | 12.8 |
-| `sombi/comfyui:slim-torch2.8.0-cu124` | ❌            | 12.4 |
-| `sombi/comfyui:slim-torch2.8.0-cu125` | ❌            | 12.5 |
-| `sombi/comfyui:slim-torch2.8.0-cu126` | ❌            | 12.6 |
-| `sombi/comfyui:slim-torch2.8.0-cu128` | ❌            | 12.8 |
+| `sombi/comfyui:base-torch2.8.0-cu124` | ✅ Yes        | 12.4 |
+| `sombi/comfyui:base-torch2.8.0-cu125` | ✅ Yes        | 12.5 |
+| `sombi/comfyui:base-torch2.8.0-cu126` | ✅ Yes        | 12.6 |
+| `sombi/comfyui:base-torch2.8.0-cu128` | ✅ Yes        | 12.8 |
+| `sombi/comfyui:slim-torch2.8.0-cu124` | ❌ No         | 12.4 |
+| `sombi/comfyui:slim-torch2.8.0-cu125` | ❌ No         | 12.5 |
+| `sombi/comfyui:slim-torch2.8.0-cu126` | ❌ No         | 12.6 |
+| `sombi/comfyui:slim-torch2.8.0-cu128` | ❌ No         | 12.8 |
 
-To change images: **Edit Pod/Template** → set `Container Image`.
-
----
-
-### ⚙️ **Environment Variables**
-
-| Variable                | Description                                                                                   | Default   |
-| ----------------------- | --------------------------------------------------------------------------------------------- | --------- |
-| `ACESS_PASSWORD`        | Password for JupyterLab and code-server                                                       | (unset)   |
-| `TIME_ZONE`             | [Timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g., `Asia/Seoul`) | `Etc/UTC` |
-| `COMFYUI_EXTRA_ARGS`    | Extra ComfyUI options (e.g. `--use-sage-attention`)                                           | (unset)   |
-| `INSTALL_SAGEATTENTION` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) at start (`True`/`False`)   | `True`    |
-| `PRESET_DOWNLOAD`       | Download predefined preset files on startup (e.g. `WAN22_I2V_A14B_GGUF_Q8_0`)                 | (unset)   |
-
-> ⚠️ SageAttention2 requires Ampere or newer GPUs and takes \~5 min to install.
+> 👉 To switch: **Edit Pod/Template** → set `Container Image`.
 
 ---
 
-### 🔧 Available PRESET_DOWNLOAD Presets
+## ⚙️ Environment Variables
+
+| Variable                | Description                                                                | Default   |
+| ----------------------- | -------------------------------------------------------------------------- | --------- |
+| `ACCESS_PASSWORD`       | Password for JupyterLab & code-server                                      | (unset)   |
+| `TIME_ZONE`             | [Timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g., `Asia/Seoul`)   | `Etc/UTC` |
+| `COMFYUI_EXTRA_ARGS`    | Extra ComfyUI options (e.g. `--fast`)                        | (unset)   |
+| `INSTALL_SAGEATTENTION` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) on start (`True`/`False`) | `True`    |
+| `PRESET_DOWNLOAD`       | Download model presets at startup (comma-separated list) (e.g. `NTRMIX40`)                  | (unset)   |
+
+> ⚠️ SageAttention2 requires **Ampere+ GPUs** and \~5 minutes to install.
+
+> To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
+
+---
+
+## 🔧 Preset Downloads
 
 > `PRESET_DOWNLOAD` accepts either a **single preset** or **multiple presets** separated by commas.\
+> (e.g. `NTRMIX40` or `WAN22_I2V_A14B_GGUF_Q8_0,WAN22_LIGHTNING_LORA,WAN22_NSFW_LORA`) \
 > When set, the container will automatically download the corresponding models on startup.
 
-> You can also manually run the preset download script:
+> You can also manually run the preset download script **inside JupyterLab or code-server**:
 > `/download_presets.sh PRESET1,PRESET2,...`
-To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
+
+### Available Presets
 
 * `NTRMIX40`
 * `WAN22_TI2V_5B`
@@ -79,13 +86,13 @@ To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
 * `WAN22_LIGHTNING_LORA`
 * `WAN22_NSFW_LORA`
 
-> Detailed information and download links are available in the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/PRESET_DOWNLOAD).
+> 👉 More details in the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/PRESET_DOWNLOAD).
 
 ---
 
-### 📁 **Logs**
+## 📁 Logs
 
-| App         | Location                                   |
+| App         | Log Path                                   |
 | ----------- | ------------------------------------------ |
 | ComfyUI     | `/workspace/ComfyUI/user/comfyui_3000.log` |
 | code-server | `/workspace/logs/code-server.log`          |
@@ -93,16 +100,16 @@ To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
 
 ---
 
-### 🧩 **Pre-Installed Components**
+## 🧩 Pre-installed Components
 
-#### **System**
+### System
 
-* **OS**: Ubuntu 24.04 (Ubuntu 22.02 for CUDA 12.4)
+* **OS**: Ubuntu 24.04 (22.02 for CUDA 12.4)
 * **Python**: 3.13
-* **Framework**: [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [Manager](https://github.com/Comfy-Org/ComfyUI-Manager) + [JupyterLab](https://jupyter.org/) + [code-server]((https://github.com/coder/code-server))
+* **Framework**: [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [ComfyUI Manager](https://github.com/Comfy-Org/ComfyUI-Manager) + [JupyterLab](https://jupyter.org/) + [code-server]((https://github.com/coder/code-server))
 * **Libraries**: PyTorch 2.8.0, CUDA (12.4–12.8), Triton, [hf\_hub](https://huggingface.co/docs/huggingface_hub), [nvtop](https://github.com/Syllo/nvtop)
 
-#### **Custom Nodes**
+#### Custom Nodes
 
 * [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
 * [ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper)
@@ -124,9 +131,3 @@ To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
 * [ComfyUI-Crystools](https://github.com/crystian/ComfyUI-Crystools)
 * [rgthree-comfy](https://github.com/rgthree/rgthree-comfy)
 * [ComfyUI-Image-Saver](https://github.com/alexopus/ComfyUI-Image-Saver)
-
----
-
-💬 Feedback & Issues → [GitHub Issues](https://github.com/somb1/ComfyUI-Docker/issues)
-
----
