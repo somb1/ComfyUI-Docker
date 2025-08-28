@@ -61,7 +61,7 @@ download_if_missing() {
 
     if [ ! -f "$filepath" ]; then
         echo "Downloading: $filename"
-        wget --no-verbose "$url" -P "$dest_dir"
+        wget "$url" -P "$dest_dir"
     else
         echo "File already exists: $filepath (skipping)"
     fi
