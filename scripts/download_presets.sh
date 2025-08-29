@@ -1,5 +1,12 @@
 #!/bin/bash
 
+WGET_OPTS="--show-progress"
+
+if [[ "$1" == "--quiet" ]]; then
+    WGET_OPTS="-q"
+    shift
+fi
+
 # download_if_missing <URL> <TARGET_DIR>
 download_if_missing() {
     local url="$1"
@@ -13,15 +20,16 @@ download_if_missing() {
 
     if [ ! -f "$filepath" ]; then
         echo "Downloading: $filename → $dest_dir"
-        wget -q --show-progress "$url" -P "$dest_dir"
+        wget $WGET_OPTS "$url" -P "$dest_dir"
     else
         echo "File already exists: $filepath (skipping)"
     fi
 }
 
 if [ $# -eq 0 ]; then
-    echo "Usage: $0 PRESET1,PRESET2,..."
+    echo "Usage: $0 [--quiet] PRESET1,PRESET2,..."
     echo "Example: $0 NTRMIX40,WAN22_T2V_A14B"
+    echo "Example (quiet): $0 --quiet NTRMIX40,WAN22_T2V_A14B"
     exit 1
 fi
 
