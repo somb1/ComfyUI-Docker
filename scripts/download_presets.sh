@@ -28,8 +28,8 @@ download_if_missing() {
 
 if [ $# -eq 0 ]; then
     echo "Usage: $0 [--quiet] PRESET1,PRESET2,..."
-    echo "Example: $0 NTRMIX40,WAN22_T2V_A14B"
-    echo "Example (quiet): $0 --quiet NTRMIX40,WAN22_T2V_A14B"
+    echo "Example: $0 WAINSFW_V140"
+    echo "Example (quiet): $0 --quiet WAINSFW_V140,WAN22_T2V_A14B"
     exit 1
 fi
 

@@ -103,13 +103,10 @@ start_code_server() {
     echo "Starting code-server..."
     mkdir -p /workspace/logs
 
-    # Default to not using a password
-    CODE_SERVER_PASSWORD=""
-
     # Allow a password to be set by providing the ACCESS_PASSWORD environment variable
     if [[ -n "${ACCESS_PASSWORD}" ]]; then
         echo "Starting code-server with the provided password..."
-        CODE_SERVER_PASSWORD=${ACCESS_PASSWORD}
+        export PASSWORD="${ACCESS_PASSWORD}"
         nohup code-server / --bind-addr 0.0.0.0:8080 \
             --auth password \
             --password "${CODE_SERVER_PASSWORD}" \
