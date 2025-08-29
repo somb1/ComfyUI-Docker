@@ -135,8 +135,8 @@ for preset in "${PRESETS[@]}"; do
             echo "Preset: WAN22_NSFW_LORA"
             download_if_missing "https://huggingface.co/3dn3lt/Wan2.2-nsfw-0.08a/resolve/main/NSFW-22-H-e8.safetensors" "/workspace/ComfyUI/models/loras"
             ;;
-        UPSCALER_MODELS)
-            echo "Preset: UPSCALER_MODELS"
+        UPSCALE_MODELS)
+            echo "Preset: UPSCALE_MODELS"
             download_if_missing "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors" "/workspace/ComfyUI/models/upscale_models"
             download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"
             ;;
