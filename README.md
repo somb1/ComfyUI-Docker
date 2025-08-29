@@ -89,6 +89,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 * `WAN22_LIGHTNING_LORA`
 * `WAN22_NSFW_LORA`
 * `UPSCALE_MODELS`
+* `WAN22_S2V_FP8_SCALED`
 
 > 👉 More details in the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/PRESET_DOWNLOAD).
 
