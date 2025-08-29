@@ -109,7 +109,6 @@ start_code_server() {
         export PASSWORD="${ACCESS_PASSWORD}"
         nohup code-server / --bind-addr 0.0.0.0:8080 \
             --auth password \
-            --password "${CODE_SERVER_PASSWORD}" \
             --ignore-last-opened \
             --disable-workspace-trust \
             &> /workspace/logs/code-server.log &
