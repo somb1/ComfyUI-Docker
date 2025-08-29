@@ -11,8 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [base, ntrmix40, wan21]
-        cuda: [12-4, 12-6, 12-8]
+        target: [base, slim]
+        cuda: [12-4, 12-5, 12-6, 12-8]
     steps:
       - name: Maximize build space
         uses: AdityaGarg8/remove-unwanted-software@v5

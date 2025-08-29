@@ -9,32 +9,47 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG PYTHON_VERSION
 ARG TORCH_VERSION
 ARG CUDA_VERSION
-ARG PREINSTALLED_MODEL
+ARG SKIP_CUSTOM_NODES
 
 # Set basic environment variables
 ENV SHELL=/bin/bash 
 ENV PYTHONUNBUFFERED=True 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=Etc/UTC
+
+# Set the default workspace directory
+ENV RP_WORKSPACE=/workspace
 
 # Override the default huggingface cache directory.
-ENV HF_HOME="/runpod-volume/.cache/huggingface/"
+ENV HF_HOME="${RP_WORKSPACE}/.cache/huggingface/"
 
 # Faster transfer of models from the hub to the container
-ENV HF_HUB_ENABLE_HF_TRANSFER="1"
+ENV HF_HUB_ENABLE_HF_TRANSFER=1
+ENV HF_XET_HIGH_PERFORMANCE=1
 
 # Shared python package cache
-ENV PIP_CACHE_DIR="/runpod-volume/.cache/pip/"
-ENV UV_CACHE_DIR="/runpod-volume/.cache/uv/"
+ENV VIRTUALENV_OVERRIDE_APP_DATA="${RP_WORKSPACE}/.cache/virtualenv/"
+ENV PIP_CACHE_DIR="${RP_WORKSPACE}/.cache/pip/"
+ENV UV_CACHE_DIR="${RP_WORKSPACE}/.cache/uv/"
+
+# modern pip workarounds
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
+ENV PIP_ROOT_USER_ACTION=ignore
+
+# Set TZ and Locale
+ENV TZ=Etc/UTC
 
 # Set working directory
 WORKDIR /
 
-# Install essential packages (optimized to run in one command)
+# Update and upgrade
 RUN apt-get update --yes && \
-    apt-get upgrade --yes && \
-    apt-get install --yes --no-install-recommends \
-        git wget curl bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential nvtop \
+    apt-get upgrade --yes
+
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+
+# Install essential packages
+RUN apt-get install --yes --no-install-recommends \
+        git wget curl bash nginx-light rsync sudo binutils ffmpeg lshw nano tzdata file build-essential cmake nvtop \
         libgl1 libglib2.0-0 clang libomp-dev ninja-build \
         openssh-server ca-certificates && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
@@ -58,6 +73,11 @@ RUN pip install --no-cache-dir -U \
     triton \
     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 
+# Download and install the SageAttention wheel dynamically based on CUDA_VERSION
+#RUN WHEEL_URL="https://github.com/somb1/SageAttention/releases/download/v2.2.0/sageattention-2.2.0+${CUDA_VERSION}torch${TORCH_VERSION}-cp313-cp313-linux_x86_64.whl" && \
+#    echo "Installing SageAttention wheel from: $WHEEL_URL" && \
+#    pip install --no-cache-dir "$WHEEL_URL"
+
 # Install ComfyUI and ComfyUI Manager
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd ComfyUI && \
@@ -66,58 +86,49 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd custom_nodes/ComfyUI-Manager && \
     pip install --no-cache-dir -r requirements.txt
 
-RUN cd /ComfyUI/custom_nodes && \
-    git clone --recursive https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git && \
-    git clone --recursive https://github.com/receyuki/comfyui-prompt-reader-node.git && \
-    git clone https://github.com/comfyanonymous/ComfyUI_TensorRT.git && \
-    git clone https://github.com/cubiq/ComfyUI_essentials.git && \
-    git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
-    git clone https://github.com/ltdrdata/ComfyUI-Impact-Subpack.git && \
-    git clone https://github.com/jags111/efficiency-nodes-comfyui.git && \
-    git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
-    git clone https://github.com/JPS-GER/ComfyUI_JPS-Nodes.git && \
-    git clone https://github.com/chrisgoringe/cg-use-everywhere.git && \
-    git clone https://github.com/crystian/ComfyUI-Crystools.git && \
-    git clone https://github.com/rgthree/rgthree-comfy.git && \
-    git clone https://github.com/alexopus/ComfyUI-Image-Saver.git && \
-    git clone https://github.com/kijai/ComfyUI-WanVideoWrapper.git && \
-    git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
-    git clone https://github.com/city96/ComfyUI-GGUF.git && \
-    git clone https://github.com/kijai/ComfyUI-KJNodes && \
-    git clone https://github.com/Flow-two/ComfyUI-WanStartEndFramesNative.git && \
-    git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git && \
-    git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git && \
-    find /ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
-    find /ComfyUI/custom_nodes -name "install.py" -exec python {} \;
+COPY custom_nodes.txt /tmp/custom_nodes.txt
+
+RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
+        cd /ComfyUI/custom_nodes && \
+        xargs -n 1 git clone --recursive < /tmp/custom_nodes.txt && \
+        find /ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
+        find /ComfyUI/custom_nodes -name "install.py" -exec python {} \; ; \
+    else \
+        echo "Skipping custom nodes installation because SKIP_CUSTOM_NODES is set"; \
+    fi
 
 # Ensure some directories are created in advance
-RUN mkdir -p /preinstalled_models/{checkpoints,upscale_models,clip_vision,text_encoders,vae} /workspace/{ComfyUI,logs,venv} 
+RUN mkdir -p /workspace/{ComfyUI,logs,venv}
 
-# Check the value of PREINSTALLED_MODEL and download the corresponding file
-RUN case "$PREINSTALLED_MODEL" in \
-        NTRMIX40) \
-            wget --no-verbose https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors -P /preinstalled_models/checkpoints && \
-            wget --no-verbose https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors -P /preinstalled_models/upscale_models \
-            ;; \
-        WAN21) \
-            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors -P /preinstalled_models/clip_vision && \
-            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors -P /preinstalled_models/text_encoders && \
-            wget --no-verbose https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors -P /preinstalled_models/vae \
-            ;; \
-    esac
+# Install Runpod CLI
+RUN wget -qO- cli.runpod.net | sudo bash
 
-# NGINX Proxy Configuration
+# Install code-server
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+
+EXPOSE 22 3000 8080 8888
+#EXPOSE 22 3000 8888
+
+# NGINX Proxy
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
+COPY proxy/snippets /etc/nginx/snippets
 COPY proxy/readme.html /usr/share/nginx/html/readme.html
+
+# Remove existing SSH host keys
+RUN rm -f /etc/ssh/ssh_host_*
+
+# Copy the README.md
 COPY README.md /usr/share/nginx/html/README.md
 
-# Copy and set execution permissions for start scripts
-COPY scripts/start.sh /
-COPY scripts/pre_start.sh /
-COPY scripts/post_start.sh /
-RUN chmod +x /start.sh /pre_start.sh /post_start.sh
+# Start Scripts
+COPY --chmod=755 scripts/start.sh /
+COPY --chmod=755 scripts/pre_start.sh /
+COPY --chmod=755 scripts/post_start.sh /
 
-# Welcome Message displayed upon login
+COPY --chmod=755 scripts/download_presets.sh /
+COPY --chmod=755 scripts/install_custom_nodes.sh /
+
+# Welcome Message
 COPY logo/runpod.txt /etc/runpod.txt
 RUN echo 'cat /etc/runpod.txt' >> /root/.bashrc
 RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
