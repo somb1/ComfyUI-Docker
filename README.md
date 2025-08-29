@@ -3,7 +3,7 @@
 > 💬 Feedback & Issues → [GitHub Issues](https://github.com/somb1/ComfyUI-Docker/issues)
 
 > 🚀 You can also run this image locally. See the [Local Setup Guide](https://github.com/somb1/ComfyUI-Docker/wiki/Running-on-Local) for instructions.
-> 
+
 ## 🔌 Exposed Ports
 
 | Port | Type | Service     |
