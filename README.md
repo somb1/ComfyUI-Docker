@@ -54,7 +54,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 | `TIME_ZONE`             | [Timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g., `Asia/Seoul`)   | `Etc/UTC` |
 | `COMFYUI_EXTRA_ARGS`    | Extra ComfyUI options (e.g. `--fast`)                        | (unset)   |
 | `INSTALL_SAGEATTENTION` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) on start (`True`/`False`) | `True`    |
-| `PRESET_DOWNLOAD`       | Download model presets at startup (comma-separated list) (e.g. `WAINSFW_V140`)                  | (unset)   |
+| `PRESET_DOWNLOAD`       | Download model presets at startup (comma-separated list) (e.g. `WAINSFW_V140)                  | (unset)   |
 
 > To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
 
