@@ -42,12 +42,10 @@ for preset in "${PRESETS[@]}"; do
         WAINSFW_V140)
             echo "Preset: WAINSFW_V140"
             download_if_missing "https://huggingface.co/Ine007/waiNSFWIllustrious_v140/resolve/main/waiNSFWIllustrious_v140.safetensors" "/workspace/ComfyUI/models/checkpoints"
-            download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"
             ;;
         NTRMIX_V40)
             echo "Preset: NTRMIX_V40"
             download_if_missing "https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors" "/workspace/ComfyUI/models/checkpoints"
-            download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"
             ;;
         WAN22_TI2V_5B)
             echo "Preset: WAN22_TI2V_5B"
@@ -61,13 +59,6 @@ for preset in "${PRESETS[@]}"; do
             download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
             download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_high_noise_14B_fp8_scaled.safetensors" "/workspace/ComfyUI/models/diffusion_models"
             download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_I2V_A14B)
-            echo "Preset: WAN22_I2V_A14B"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors" "/workspace/ComfyUI/models/diffusion_models"
             ;;
         WAN22_I2V_A14B_FP8_SCALED)
             echo "Preset: WAN22_I2V_A14B_FP8_SCALED"
@@ -143,6 +134,11 @@ for preset in "${PRESETS[@]}"; do
         WAN22_NSFW_LORA)
             echo "Preset: WAN22_NSFW_LORA"
             download_if_missing "https://huggingface.co/3dn3lt/Wan2.2-nsfw-0.08a/resolve/main/NSFW-22-H-e8.safetensors" "/workspace/ComfyUI/models/loras"
+            ;;
+        UPSCALER_MODELS)
+            echo "Preset: UPSCALER_MODELS"
+            download_if_missing "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors" "/workspace/ComfyUI/models/upscale_models"
+            download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"
             ;;
         *)
             echo "No matching preset for '${preset}', skipping."

@@ -77,7 +77,6 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 * `NTRMIX_V40`
 * `WAN22_TI2V_5B`
 * `WAN22_T2V_A14B`
-* `WAN22_I2V_A14B`
 * `WAN22_I2V_A14B_FP8_SCALED`
 * `WAN22_I2V_A14B_FP8_E4M3FN_SCALED_KJ`
 * `WAN22_I2V_A14B_FP8_E5M2_SCALED_KJ`
@@ -89,6 +88,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 * `WAN22_I2V_A14B_GGUF_Q4_K_M`
 * `WAN22_LIGHTNING_LORA`
 * `WAN22_NSFW_LORA`
+* `UPSCALER_MODELS`
 
 > 👉 More details in the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/PRESET_DOWNLOAD).
 
