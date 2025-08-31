@@ -63,7 +63,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 
 ## 🔧 Preset Downloads
 
-> `PRESET_DOWNLOAD` accepts either a **single preset** or **multiple presets** separated by commas.\
+> The `PRESET_DOWNLOAD` environment variable accepts either a **single preset** or **multiple presets** separated by commas.\
 > (e.g. `WAINSFW_V140` or `WAN22_I2V_A14B_GGUF_Q8_0,WAN22_LIGHTNING_LORA,WAN22_NSFW_LORA`) \
 > When set, the container will automatically download the corresponding models on startup.
 
