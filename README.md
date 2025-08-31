@@ -91,7 +91,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 * `UPSCALE_MODELS`
 * `WAN22_S2V_FP8_SCALED`
 
-> 👉 More details in the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/PRESET_DOWNLOAD).
+> 👉 If you want to know **which files each preset will download** (e.g., text encoder, VAE, diffusion model), check the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/PRESET_DOWNLOAD).
 
 ---
 
