@@ -2,7 +2,7 @@
 
 > 💬 Feedback & Issues → [GitHub Issues](https://github.com/somb1/ComfyUI-Docker/issues)
 
-> 🚀 Although this Docker image was originally built for running on RunPod, it can also be used on your local machine. See the [Local Setup Guide](https://github.com/somb1/ComfyUI-Docker/wiki/Running-on-Local)
+> 🚀 This Docker image was originally built for running on RunPod, but it can also be used on your local machine. See the [Local Setup Guide](https://github.com/somb1/ComfyUI-Docker/wiki/Running-on-Local).
 
 ## 🔌 Exposed Ports
 
