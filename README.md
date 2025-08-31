@@ -26,7 +26,6 @@ sombi/comfyui:(A)-torch2.8.0-(B)
   * `base`: slim + pre-installed custom nodes
 * **(B)**: CUDA version → `cu124`, `cu125`, `cu126`, `cu128`
 
-
 ---
 
 ## 🧱 Image Variants
@@ -71,27 +70,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 > You can also manually run the preset download script **inside JupyterLab or code-server**:
 > `bash /download_presets.sh PRESET1,PRESET2,...`
 
-### Available Presets
-
-* `WAINSFW_V140`
-* `NTRMIX_V40`
-* `WAN22_TI2V_5B`
-* `WAN22_T2V_A14B`
-* `WAN22_I2V_A14B_FP8_SCALED`
-* `WAN22_I2V_A14B_FP8_E4M3FN_SCALED_KJ`
-* `WAN22_I2V_A14B_FP8_E5M2_SCALED_KJ`
-* `WAN22_I2V_A14B_GGUF_Q8_0`
-* `WAN22_I2V_A14B_GGUF_Q6_K`
-* `WAN22_I2V_A14B_GGUF_Q5_K_S`
-* `WAN22_I2V_A14B_GGUF_Q5_K_M`
-* `WAN22_I2V_A14B_GGUF_Q4_K_S`
-* `WAN22_I2V_A14B_GGUF_Q4_K_M`
-* `WAN22_LIGHTNING_LORA`
-* `WAN22_NSFW_LORA`
-* `UPSCALE_MODELS`
-* `WAN22_S2V_FP8_SCALED`
-
-> 👉 To see the download list for each preset, check the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/PRESET_DOWNLOAD).
+> 👉 To see which presets are available and view the download list for each, check the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/PRESET_DOWNLOAD).
 
 ---
 
