@@ -2,7 +2,7 @@
 
 > 💬 Feedback & Issues → [GitHub Issues](https://github.com/somb1/ComfyUI-Docker/issues)
 
-> 🚀 This Docker image was originally built for running on RunPod, but it can also be used on your local machine. See the [Local Setup Guide](https://github.com/somb1/ComfyUI-Docker/wiki/Running-on-Local).
+> 🚀 This Docker image was originally built for running on RunPod, but it can also be used on your local machine. See the [Local Setup Guide(WiP)](https://github.com/somb1/ComfyUI-Docker/wiki/Running-on-Local).
 
 ## 🔌 Exposed Ports
 
@@ -55,7 +55,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 | `INSTALL_SAGEATTENTION` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) on start (`True`/`False`) | `False`    |
 | `PRESET_DOWNLOAD`       | Download model presets at startup (comma-separated list) (e.g. `WAINSFW_V140`)                  | (unset)   |
 
-> To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
+> 👉 To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
 
 > ⚠️ SageAttention2 requires **Ampere+ GPUs** and ~5 minutes to install.
 
