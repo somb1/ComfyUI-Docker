@@ -69,7 +69,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 > When set, the container will automatically download the corresponding models on startup.
 
 > You can also manually run the preset download script **inside JupyterLab or code-server**:
-> `/download_presets.sh PRESET1,PRESET2,...`
+> `bash /download_presets.sh PRESET1,PRESET2,...`
 
 ### Available Presets
 
