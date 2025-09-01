@@ -96,7 +96,7 @@ bash /download_presets.sh PRESET1,PRESET2,...
 * **Framework**: [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [ComfyUI Manager](https://github.com/Comfy-Org/ComfyUI-Manager) + [JupyterLab](https://jupyter.org/) + [code-server]((https://github.com/coder/code-server))
 * **Libraries**: PyTorch 2.8.0, CUDA (12.4–12.8), Triton, [hf\_hub](https://huggingface.co/docs/huggingface_hub), [nvtop](https://github.com/Syllo/nvtop)
 
-#### Custom Nodes
+#### Custom Nodes (only in **base** image)
 
 * ComfyUI-KJNodes
 * ComfyUI-WanVideoWrapper
