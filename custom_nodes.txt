@@ -19,3 +19,5 @@ https://github.com/crystian/ComfyUI-Crystools.git
 https://github.com/rgthree/rgthree-comfy.git
 https://github.com/alexopus/ComfyUI-Image-Saver.git
 https://github.com/jupo-ai/comfy-ex-tagcomplete.git
+https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
+https://github.com/orssorbit/ComfyUI-wanBlockswap.git

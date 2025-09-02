@@ -1,5 +1,6 @@
 #!/bin/bash
-set -e
+
+#set -e
 
 echo "==== Installing ComfyUI custom nodes ===="
 
