@@ -107,14 +107,14 @@ start_code_server() {
     if [[ -n "${ACCESS_PASSWORD}" ]]; then
         echo "Starting code-server with the provided password..."
         export PASSWORD="${ACCESS_PASSWORD}"
-        nohup code-server / --bind-addr 0.0.0.0:8080 \
+        nohup code-server /workspcae --bind-addr 0.0.0.0:8080 \
             --auth password \
             --ignore-last-opened \
             --disable-workspace-trust \
             &> /workspace/logs/code-server.log &
     else
         echo "Starting code-server without a password... (ACCESS_PASSWORD environment variable is not set.)"
-        nohup code-server / --bind-addr 0.0.0.0:8080 \
+        nohup code-server /workspace --bind-addr 0.0.0.0:8080 \
             --auth none \
             --ignore-last-opened \
             --disable-workspace-trust \
