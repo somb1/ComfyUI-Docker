@@ -1,10 +1,10 @@
 https://github.com/kijai/ComfyUI-KJNodes.git
-https://github.com/kijai/ComfyUI-WanVideoWrapper
+https://github.com/kijai/ComfyUI-WanVideoWrapper.git
 https://github.com/city96/ComfyUI-GGUF.git
-https://github.com/yolain/ComfyUI-Easy-Use
-https://github.com/Fannovel16/ComfyUI-Frame-Interpolation
-https://github.com/Smirnov75/ComfyUI-mxToolkit
-https://github.com/pollockjj/ComfyUI-MultiGPU
+https://github.com/yolain/ComfyUI-Easy-Use.git
+https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git
+https://github.com/Smirnov75/ComfyUI-mxToolkit.git
+https://github.com/pollockjj/ComfyUI-MultiGPU.git
 https://github.com/comfyanonymous/ComfyUI_TensorRT.git
 https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git
 https://github.com/receyuki/comfyui-prompt-reader-node.git
@@ -18,3 +18,4 @@ https://github.com/chrisgoringe/cg-use-everywhere.git
 https://github.com/crystian/ComfyUI-Crystools.git
 https://github.com/rgthree/rgthree-comfy.git
 https://github.com/alexopus/ComfyUI-Image-Saver.git
+https://github.com/jupo-ai/comfy-ex-tagcomplete.git

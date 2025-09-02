@@ -9,33 +9,49 @@ echo "$TZ" | sudo tee /etc/timezone > /dev/null
 sudo ln -sf "/usr/share/zoneinfo/$TZ" /etc/localtime
 sudo dpkg-reconfigure -f noninteractive tzdata
 
+# Function: Update VIRTUAL_ENV paths in all text files under /workspace/venv/bin
+update_venv_paths() {
+    local bin_dir="/workspace/venv/bin"
+    echo "Updating '/venv' to '/workspace/venv' in all text files under '$bin_dir'..."
+
+    find "$bin_dir" -type f | while read -r file; do
+        if file "$file" | grep -q "text"; then
+            # VIRTUAL_ENV='/venv' → VIRTUAL_ENV='/workspace/venv'
+            sed -i "s|VIRTUAL_ENV='/venv'|VIRTUAL_ENV='/workspace/venv'|g" "$file"
+            
+            # VIRTUAL_ENV '/venv' → VIRTUAL_ENV '/workspace/venv'
+            sed -i "s|VIRTUAL_ENV '/venv'|VIRTUAL_ENV '/workspace/venv'|g" "$file"
+            
+            # #!/venv/bin/python → #!/workspace/venv/bin/python
+            sed -i "s|#!/venv/bin/python|#!/workspace/venv/bin/python|g" "$file"
+
+            # Uncomment to debug
+            # echo "Updated: $file"
+        fi
+    done
+}
+
 echo "**** syncing venv to workspace, please wait. This could take a while on first startup! ****"
 if [ -d /venv ]; then
-    rsync -au --remove-source-files /venv/ /workspace/venv/ && rm -rf /venv
+    if [ -d /workspace/venv ]; then
+        echo "Skip: /workspace/venv already exists."
+    else
+        if rsync -au --remove-source-files /venv/ /workspace/venv/ && rm -rf /venv; then
+            # Only update paths if rsync actually ran
+            update_venv_paths
+        fi
+    fi
 else
     echo "Skip: /venv does not exist."
 fi
 
-# Updating '/venv' to '/workspace/venv' in all text files under '/workspace/venv/bin'
-find "/workspace/venv/bin" -type f | while read -r file; do
-    if file "$file" | grep -q "text"; then
-        # VIRTUAL_ENV='/venv' → VIRTUAL_ENV='/workspace/venv'
-        sed -i "s|VIRTUAL_ENV='/venv'|VIRTUAL_ENV='/workspace/venv'|g" "$file"
-        
-        # VIRTUAL_ENV '/venv' → VIRTUAL_ENV '/workspace/venv'
-        sed -i "s|VIRTUAL_ENV '/venv'|VIRTUAL_ENV '/workspace/venv'|g" "$file"
-        
-        # #!/venv/bin/python → #!/workspace/venv/bin/python
-        sed -i "s|#!/venv/bin/python|#!/workspace/venv/bin/python|g" "$file"
-
-        # Uncomment to see which files are updated
-        #echo "Updated: $file"
-    fi
-done
-
 echo "**** syncing ComfyUI to workspace, please wait ****"
 if [ -d /ComfyUI ]; then
-    rsync -au --remove-source-files /ComfyUI/ /workspace/ComfyUI/ && rm -rf /ComfyUI
+    if [ -d /workspace/ComfyUI ]; then
+        echo "Skip: /workspace/ComfyUI already exists."
+    else
+        rsync -au --remove-source-files /ComfyUI/ /workspace/ComfyUI/ && rm -rf /ComfyUI
+    fi
 else
     echo "Skip: /ComfyUI does not exist."
 fi
