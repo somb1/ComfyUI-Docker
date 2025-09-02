@@ -127,6 +127,7 @@ COPY --chmod=755 scripts/post_start.sh /
 
 COPY --chmod=755 scripts/download_presets.sh /
 COPY --chmod=755 scripts/install_custom_nodes.sh /
+COPY custom_nodes.txt /
 
 # Welcome Message
 COPY logo/runpod.txt /etc/runpod.txt
