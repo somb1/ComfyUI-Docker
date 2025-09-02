@@ -73,11 +73,6 @@ RUN pip install --no-cache-dir -U \
     triton \
     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 
-# Download and install the SageAttention wheel dynamically based on CUDA_VERSION
-#RUN WHEEL_URL="https://github.com/somb1/SageAttention/releases/download/v2.2.0/sageattention-2.2.0+${CUDA_VERSION}torch${TORCH_VERSION}-cp313-cp313-linux_x86_64.whl" && \
-#    echo "Installing SageAttention wheel from: $WHEEL_URL" && \
-#    pip install --no-cache-dir "$WHEEL_URL"
-
 # Install ComfyUI and ComfyUI Manager
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd ComfyUI && \
@@ -107,7 +102,6 @@ RUN wget -qO- cli.runpod.net | sudo bash
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 EXPOSE 22 3000 8080 8888
-#EXPOSE 22 3000 8888
 
 # NGINX Proxy
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
