@@ -9,7 +9,7 @@ echo "$TZ" | sudo tee /etc/timezone > /dev/null
 sudo ln -sf "/usr/share/zoneinfo/$TZ" /etc/localtime
 sudo dpkg-reconfigure -f noninteractive tzdata
 
-# Function: Update VIRTUAL_ENV paths in all text files under /workspace/venv/bin
+# Update VIRTUAL_ENV paths in all text files under /workspace/venv/bin
 update_venv_paths() {
     local bin_dir="/workspace/venv/bin"
     echo "Updating '/venv' to '/workspace/venv' in all text files under '$bin_dir'..."
