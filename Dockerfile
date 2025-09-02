@@ -86,11 +86,11 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd custom_nodes/ComfyUI-Manager && \
     pip install --no-cache-dir -r requirements.txt
 
-COPY custom_nodes.txt /tmp/custom_nodes.txt
+COPY custom_nodes.txt /custom_nodes.txt
 
 RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
         cd /ComfyUI/custom_nodes && \
-        xargs -n 1 git clone --recursive < /tmp/custom_nodes.txt && \
+        xargs -n 1 git clone --recursive < /custom_nodes.txt && \
         find /ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
         find /ComfyUI/custom_nodes -name "install.py" -exec python {} \; ; \
     else \
@@ -127,7 +127,6 @@ COPY --chmod=755 scripts/post_start.sh /
 
 COPY --chmod=755 scripts/download_presets.sh /
 COPY --chmod=755 scripts/install_custom_nodes.sh /
-COPY custom_nodes.txt /
 
 # Welcome Message
 COPY logo/runpod.txt /etc/runpod.txt
