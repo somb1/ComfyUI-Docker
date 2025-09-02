@@ -118,5 +118,6 @@ bash /download_presets.sh PRESET1,PRESET2,...
 * ComfyUI-Crystools
 * rgthree-comfy
 * ComfyUI-Image-Saver
+* comfy-ex-tagcomplete
 
 > 👉 More details in the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/Custom-Nodes).
