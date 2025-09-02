@@ -18,20 +18,24 @@ download_if_missing() {
 
     mkdir -p "$dest_dir"
 
-    if [ ! -f "$filepath" ]; then
-        echo "Downloading: $filename → $dest_dir"
-        wget $WGET_OPTS "$url" -P "$dest_dir"
-    else
+    if [ -f "$filepath" ]; then
         echo "File already exists: $filepath (skipping)"
+        return
+    fi
+
+    echo "Downloading: $filename → $dest_dir"
+    
+    local tmpfile="/tmp/${filename}.part"
+
+    if wget $WGET_OPTS -O "$tmpfile" "$url"; then
+        mv -f "$tmpfile" "$filepath"
+        echo "Download completed: $filepath"
+    else
+        echo "Download failed: $url"
+        rm -f "$tmpfile"
+        return 1
     fi
 }
-
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 [--quiet] PRESET1,PRESET2,..."
-    echo "Example: $0 WAINSFW_V140"
-    echo "Example (quiet): $0 --quiet WAINSFW_V140,WAN22_T2V_A14B"
-    exit 1
-fi
 
 IFS=',' read -ra PRESETS <<< "$1"
 
