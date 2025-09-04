@@ -33,13 +33,8 @@ update_venv_paths() {
 
 echo "**** syncing venv to workspace, please wait. This could take a while on first startup! ****"
 if [ -d /venv ]; then
-    if [ -d /workspace/venv ]; then
-        echo "Skip: /workspace/venv already exists."
-    else
-        if rsync -au --remove-source-files /venv/ /workspace/venv/ && rm -rf /venv; then
-            # Only update paths if rsync actually ran
-            update_venv_paths
-        fi
+    if rsync -au --remove-source-files /venv/ /workspace/venv/ && rm -rf /venv; then
+        update_venv_paths
     fi
 else
     echo "Skip: /venv does not exist."
@@ -47,14 +42,32 @@ fi
 
 echo "**** syncing ComfyUI to workspace, please wait ****"
 if [ -d /ComfyUI ]; then
-    if [ -d /workspace/ComfyUI ]; then
-        echo "Skip: /workspace/ComfyUI already exists."
-    else
-        rsync -au --remove-source-files /ComfyUI/ /workspace/ComfyUI/ && rm -rf /ComfyUI
+
+    SRC_MODELS="/ComfyUI/models"
+    DST_MODELS="/workspace/ComfyUI/models"
+
+    EXCLUDE_MODELS=""
+
+    if [ -d "$DST_MODELS" ] && [ "$(ls -A "$DST_MODELS")" ]; then
+        for d in "$DST_MODELS"/*/; do
+            [ -d "$d" ] || continue
+            folder_name=$(basename "$d")
+            EXCLUDE_MODELS="$EXCLUDE_MODELS --exclude='models/$folder_name/**'"
+        done
+        echo "**** Excluding existing model folders: $EXCLUDE_MODELS ****"
     fi
+
+    if [ -d /workspace/ComfyUI/output ]; then
+        EXCLUDE_MODELS="$EXCLUDE_MODELS --exclude='output/'"
+        echo "**** Excluding existing output folder ****"
+    fi
+
+    rsync -au --remove-source-files $EXCLUDE_MODELS /ComfyUI/ /workspace/ComfyUI/ && rm -rf /ComfyUI
+
 else
     echo "Skip: /ComfyUI does not exist."
 fi
+
 
 if [ "${INSTALL_SAGEATTENTION,,}" = "true" ]; then
     if pip show sageattention > /dev/null 2>&1; then
@@ -65,6 +78,15 @@ if [ "${INSTALL_SAGEATTENTION,,}" = "true" ]; then
         cd /SageAttention
         python setup.py install
         echo "**** SageAttention2 installation completed. ****"
+    fi
+fi
+
+if [ "${INSTALL_CUSTOM_NODES,,}" = "true" ]; then
+    if [ -f /install_custom_nodes.sh ]; then
+        echo "**** INSTALL_CUSTOM_NODES is set. Running /install_custom_nodes.sh ****"
+        /install_custom_nodes.sh
+    else
+        echo "**** /install_custom_nodes.sh not found. Skipping. ****"
     fi
 fi
 
