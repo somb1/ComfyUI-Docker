@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#set -e
-
 echo "==== Installing ComfyUI custom nodes ===="
 
 cd /workspace/ComfyUI/custom_nodes
