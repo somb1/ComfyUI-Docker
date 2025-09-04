@@ -24,7 +24,7 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 * **(A)**: `slim` or `base`
   * `slim`: ComfyUI + Manager only
   * `base`: slim + pre-installed custom nodes
-* **(B)**: CUDA version → `cu124`, `cu125`, `cu126`, `cu128`
+* **(B)**: CUDA version → `cu124`, `cu126`, `cu128`
 
 ---
 
@@ -33,11 +33,9 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 | Image Name                            | Custom Nodes | CUDA |
 | ------------------------------------- | ------------ | ---- |
 | `sombi/comfyui:base-torch2.8.0-cu124` | ✅ Yes        | 12.4 |
-| `sombi/comfyui:base-torch2.8.0-cu125` | ✅ Yes        | 12.5 |
 | `sombi/comfyui:base-torch2.8.0-cu126` | ✅ Yes        | 12.6 |
 | `sombi/comfyui:base-torch2.8.0-cu128` | ✅ Yes        | 12.8 |
 | `sombi/comfyui:slim-torch2.8.0-cu124` | ❌ No         | 12.4 |
-| `sombi/comfyui:slim-torch2.8.0-cu125` | ❌ No         | 12.5 |
 | `sombi/comfyui:slim-torch2.8.0-cu126` | ❌ No         | 12.6 |
 | `sombi/comfyui:slim-torch2.8.0-cu128` | ❌ No         | 12.8 |
 
