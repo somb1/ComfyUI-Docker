@@ -10,7 +10,7 @@ variable "TORCH_VERSION" {
 }
 
 variable "EXTRA_TAG" {
-    default = ""
+    default = "-dev"
 }
 
 function "tag" {
