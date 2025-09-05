@@ -25,7 +25,9 @@ download_if_missing() {
 
     echo "Downloading: $filename → $dest_dir"
     
-    local tmpfile="/tmp/${filename}.part"
+    local tmpdir="/workspace/tmp"
+    mkdir -p "$tmpdir"
+    local tmpfile="$tmpdir/${filename}.part"
 
     if wget $WGET_OPTS -O "$tmpfile" "$url"; then
         mv -f "$tmpfile" "$filepath"
