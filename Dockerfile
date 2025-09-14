@@ -93,7 +93,7 @@ RUN if [ -z "$SKIP_CUSTOM_NODES" ]; then \
     fi
 
 # Install Runpod CLI
-RUN wget -qO- cli.runpod.net | sudo bash
+#RUN wget -qO- cli.runpod.net | sudo bash
 
 # Install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh
