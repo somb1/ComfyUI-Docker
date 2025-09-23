@@ -76,6 +76,7 @@ if [ "${INSTALL_SAGEATTENTION,,}" = "true" ]; then
         echo "**** SageAttention2 is not installed. Installing, please wait.... (This may take a long time, approximately 5+ minutes.) ****"
         git clone https://github.com/thu-ml/SageAttention.git /SageAttention
         cd /SageAttention
+        export EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32
         python setup.py install
         echo "**** SageAttention2 installation completed. ****"
     fi

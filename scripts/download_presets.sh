@@ -143,6 +143,7 @@ for preset in "${PRESETS[@]}"; do
             echo "Preset: UPSCALE_MODELS"
             download_if_missing "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors" "/workspace/ComfyUI/models/upscale_models"
             download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"
+            download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_Fast_RCAN_PU.safetensors" "/workspace/ComfyUI/models/upscale_models"
             ;;
         WAN22_S2V_FP8_SCALED)
             echo "Preset: WAN22_S2V_FP8_SCALED"
